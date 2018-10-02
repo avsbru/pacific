@@ -1,6 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 html{
-  font-size: 10px;
+  //font-size: 10px;
 }
 .header{
 
+}
+.menu{
+  font-family: Roboto;
+
+font-size: 14px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 24px; /* Приближение из-за подстановки шрифтов */
+text-align: left;
+}
+.menu a{
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+}
+.menu a:hover{
+  border-bottom: 9px #eaecec solid;
+  text-decoration: none;
+  color: #000000;
+}
+.phone{
+  font-family: Roboto;
+color: #000000;
+font-size: 18px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 24px; /* Приближение из-за подстановки шрифтов */
+text-align: right;
+}
+.bgbannner{
+  position: relative;
+}
+.signbanner{
+  position: absolute;
+  bottom: 100px;
+  left: 120px;
+}
+.carousel-control-next-icon{
+  width: 11px;
+  height: 34px !important;
+  position: relative;
+  left: 50px;
+  color: #000000;
+  background-image: url("../img/nextarrow.png") !important;
+}
+.carousel-control-prev-icon{
+  width: 11px;
+  height: 34px !important;
+  position: relative;
+  right: 50px;
+  color: #000000;
+  background-image: url("../img/prevarrow.png") !important;
+}
+.carousel-caption{
+  left: 45% !important;
+  right: 0 !important;
+  bottom: 0% !important;
+  border: 1px #0f0 solid;
+  width: 50%;
+}
+.carousel-caption h3{
+  font-family: Roboto;
+color: #000000;
+font-size: 18px;/* Приближение из-за подстановки шрифтов */
+font-weight: 900;
+line-height: 24px;/* Приближение из-за подстановки шрифтов */
+text-align: left;
+text-transform: uppercase;
+border: 1px #f00 solid;
+width: 200px;
+}
+.usl{
+  font-family: Roboto;
+color: #ffffff;
+font-size: 14px;/* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 24px;/* Приближение из-за подстановки шрифтов */
+text-align: left;
+}
+.footer h3{
+  font-family: Roboto;
+color:#000000;
+font-size: 14px;/* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 24px;/* Приближение из-за подстановки шрифтов */
+text-align: left;
+text-transform: uppercase;
+}
+.footer ul{
+  font-family: Roboto;
+color: #000000;
+font-size: 14px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 24px; /* Приближение из-за подстановки шрифтов */
+text-align: left;
 }
