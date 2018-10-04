@@ -8,6 +8,7 @@ html{
 }
 .menu{
   font-family: Roboto;
+  position: relative;
 
 font-size: 14px; /* Приближение из-за подстановки шрифтов */
 font-weight: 400;
@@ -19,11 +20,35 @@ text-align: left;
   color: #000000;
   text-decoration: none;
 }
-.menu a:hover{
+.menu>a:hover{
   border-bottom: 9px #eaecec solid;
   text-decoration: none;
   color: #000000;
 }
+.menu li:hover > ul {
+  display:block;
+}
+.menu ul{
+  display: none;
+  position:absolute;
+  background: #ffffff;
+  z-index: 100;
+  top: 100%;
+  border: 1px #d5d5d5 solid;
+  padding: 2rem 0;
+}
+.menu ul li{
+  min-width: 16rem;
+  padding: 0 2rem;
+}
+.menu ul li:hover{
+  background: #a7aeb1;
+}
+.menu ul li > a:hover{
+  text-decoration: none;
+  color: #000000;
+}
+
 .phone{
   font-family: Roboto;
 color: #000000;
@@ -109,20 +134,32 @@ text-align: right;
 }
 .infoblock2{
   position: relative !important;
-  border: #f00 1px solid;
+  /*border: #f00 1px solid;*/
   bottom: 0 !important;
   right: 0 !important;
   left: 0 !important;
   color: #000000 !important;
+  padding: 0 !important;
 }
 .infoblock2 h4{
   font-family: Roboto;
   color:   #000000;
   font-size: 14px;/* Приближение из-за подстановки шрифтов */
-  font-weight: 400;
+  font-weight: 800;
   line-height: 24px;/* Приближение из-за подстановки шрифтов */
   text-align: left;
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+}
+.sku-params{
+  text-align: left;
+  color: #a7aeb1;
+}
+.sku-price{
+  font-family: Roboto;
+  text-align: left;
+  font-size: 16px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 800;
 }
 .img-novinki{
   max-height: 90%;
