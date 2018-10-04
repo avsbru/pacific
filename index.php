@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
-    <section class="container header">
+    <section class="container header d-none d-md-block">
         <ul class="row list-unstyled m-0 p-0">
           <li class="col-12 col-md-4 pl-0 d-flex align-items-center">
             <ul class="list-inline pl-0 text-left menu">
@@ -48,7 +48,7 @@
             </ul>
           </li>
           <li class="col-12 col-md-4 text-center px-0">
-            <img src="img/logo.png" />
+            <a href="/"><img src="img/logo.png" /></a>
           </li>
           <li class="col-12 col-md-4 pr-0 d-flex align-items-center justify-content-end">
             <span class="phone d-inline-block mr-5">8 800 00 000 00</span>
@@ -58,7 +58,15 @@
         </ul>
     </section>
 
-    <section class="container slider bgbannner">
+    <section class="container d-block d-md-none">
+      <div class="row">
+        <li class="col-12 px-0">
+          <a href="/"><img src="img/logo.png" /></a>
+        </li>
+      </div>
+    </section>
+
+    <section class="container slider bgbannner d-none d-md-block">
       <img src="img/slidertpl.png" class="w-100"/>
       <img src="img/newcol.png" class="signbanner"/>
     </section>
@@ -102,7 +110,7 @@
         </div>
       -->
 
-  <section class="container my-5 dials">
+  <section class="container my-5 d-none d-md-block dials">
     <h2 class="mb-4">Специальные предложения</h2>
     <div id="carousel" class="carousel slide" data-ride="false">
     <div class="carousel-inner">
@@ -130,7 +138,7 @@
       </div>
 
       <div class="carousel-item">
-        <div class="row">
+        <div class="row px-5">
           <div class="col-md-6 col-12">
             <img class="img-fluid" src="img/slide1.png" alt="...">
             <div class="carousel-caption infoblock1">
@@ -151,6 +159,7 @@
           </div>
        </div>
       </div>
+
     </div>
     <!-- Элементы управления -->
     <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
@@ -293,21 +302,21 @@
         <div class="col-md-4">
           <h3>Справка</h3>
           <ul class="list-unstyled pl-4 mt-4">
-            <li>Часто задаваемые вопросы</li>
-            <li>Как делать покупки</li>
-            <li>Доставка и получение</li>
-            <li>Обмен и возврат</li>
-            <li>Оплата</li>
+            <li><a href="">Часто задаваемые вопросы</a></li>
+            <li><a href="">Как делать покупки</a></li>
+            <li><a href="">Доставка и получение</a></li>
+            <li><a href="">Обмен и возврат</a></li>
+            <li><a href="">Оплата</a></li>
           </ul>
         </div>
         <div class="col-md-4">
           <h3>Компания</h3>
           <ul class="list-unstyled pl-4 mt-4">
-            <li>История бренда</li>
-            <li>Inditex</li>
-            <li>Ценности</li>
-            <li>Работайте с нами</li>
-            <li>Пресс-служба</li>
+            <li><a href="">История бренда</a></li>
+            <li><a href="">Inditex</a></li>
+            <li><a href="">Ценности</a></li>
+            <li><a href="">Работайте с нами</a></li>
+            <li><a href="">Пресс-служба</a></li>
           </ul>
         </div>
         <div class="col-md-4">
@@ -315,7 +324,7 @@
           <ul class="list-unstyled pl-4 mt-4">
             <li>Тел. (495) 000-00-00, </li>
             <li>8-000-000-00-00</li>
-            <li>E-mail: love@mail.ru</li>
+            <li>E-mail: <a href="mailto:love@mail.ru">love@mail.ru</a></li>
           </ul>
         </div>
       </div>
