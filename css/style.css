@@ -20,7 +20,7 @@ text-align: left;
   color: #000000;
   text-decoration: none;
 }
-.menu>a:hover{
+.menu li > a:hover{
   border-bottom: 9px #eaecec solid;
   text-decoration: none;
   color: #000000;
