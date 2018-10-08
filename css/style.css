@@ -47,6 +47,7 @@ text-align: left;
 .menu ul li > a:hover{
   text-decoration: none;
   color: #000000;
+  border-bottom: none;
 }
 
 .phone{
