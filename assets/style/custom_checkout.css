@@ -1,0 +1,29 @@
+/* Логотип. Загрузить логотип можно в разделе Файлы */
+/* Затем в том же разделе посмотрите путь к изображению и замените http://insales.ru/assets/293/example_logo_icon.png на этот путь */
+/* Высота изображения логотипа не должна превышать 60px */
+#logo_bg { background-image:url('http://atlantic.myinsales.ru/assets/1/7559/7559/logo.gif');}
+/* ширина логотипа по умолчанию 60px, можно переопределить */
+#logo_bg {width:243px; height:52px; }
+/* Что бы логотип не отображался, замените "display:block" на "display:none" или удалите строки #logo_bg */
+#logo_bg { display:block; }
+
+.header { height:85px; }
+.header-bg { background:#fff; }
+.body {
+  background:#FFF url(http://atlantic.myinsales.ru/assets/1/7559/7559/shopWrap.gif) top center no-repeat; width:940px;
+font:13px/1.2em "Trebuchet MS",Tahoma,Verdana,sans-serif; color:#695468;
+  -moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;
+}
+
+a { color:#966994; text-decoration:underline; }
+a:hover, a:active, a:focus { text-decoration:none; }
+h1 { }
+h2 { }
+h3 { color:#81589E; font-size:1.4em; font-weight:normal; line-height:1.2em; }
+h3 a { color:#81589E; text-decoration:underline; }
+h3 a:hover { text-decoration:none; }
+h4 {}
+h5 {}
+
+form { margin:0; padding:0; }
+

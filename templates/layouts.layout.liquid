@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{ 'style.css' | asset_url}}">
+  <script src="https://use.fontawesome.com/bd68b09bc0.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <title>{{ title | escape }}</title>
+
+    
+  
+  {%comment%}
+  <title>{{ title | escape }} </title>
+  <!--meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"-->
+  <meta http-equiv="Content-language" content="ru" />
+  <meta content="{{ keywords }}" name="keywords" />
+  <meta content="{{ description }}" name="description" />
+  <meta name='yandex-verification' content='7467e6cf765c7dbd' />
+  <meta name="google-site-verification" content="liJF0mfxEce30uBE7Y4LwSBRAIlnADCbGFrtRr5SRAA" />
+  <meta name="viewport" content="width=1000">
+  <meta name="mailru-domain" content="OA4GM0Uq8LMh2kyc" />
+
+  <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url }}">
+  <link rel="alternate" type="application/rss+xml" title="Новости магазина Atlantic-shop.ru" href="/blog.atom" />
+
+  <link rel="stylesheet" type="text/css" href="{{ 'all.css' | asset_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'screen.css' | asset_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'print.css' | asset_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'lightboxMA.css' | asset_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'jquery.bxslider.css' | asset_url }}">
+  <link rel="stylesheet" type="text/css" href="{{ 'jquery.lightbox-0.5.css' | asset_url }}" media="screen">
+  <link rel="stylesheet" type="text/css" href="{{ 'main.css' | asset_url }}" />
+  <link rel="stylesheet" type="text/css" href="{{ 'nivo-slider.css' | asset_url }}" />
+
+  <script type="text/javascript">
+    document.write('<link rel="stylesheet" type="text/css" href="{{ 'javascript.css' | asset_url }}" media="all">');
+  </script>
+	
+  <!--script type="text/javascript" src="{{ 'jquery-1.3.2.min.js' | asset_url }}"></script-->
+  <!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script-->
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">google.load("jquery", "1");</script>
+  
+  <script type="text/javascript" src="{{ 'jquery.nivo.slider.pack.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'mainpage.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'hoverIntent.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'superfish.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'zoommerMa.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'scrollerMa.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'lightboxMA.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'jquery-ui-1.7.2.custom.min.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'atlantic_options.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{  'jquery.bxslider.min.js' | asset_url }}"></script>
+
+  <!-- InSales scripts -->
+  <script type="text/javascript">
+    var money_with_currency_format = '{{money_with_currency_format}}';
+  </script>
+  <script type="text/javascript" src="{{ 'shop/common.js' | global_asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'jquery.inspect.js' | global_asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'jquery.timers.1.1.2.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'cart.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'centerImage.js' | asset_url }}"></script>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.promolink').click(function(){
+      	var kod=$(this).text();
+        $('#coupon_text').val(kod)
+      })
+    })
+  </script>
+{%endcomment%}  
+</head>
+
+<body>
+  
+  <section class="container header d-none d-md-block">
+        <ul class="row list-unstyled m-0 p-0">
+          <li class="col-12 col-md-4 pl-0 d-flex align-items-center">
+            <ul class="list-inline pl-0 text-left menu">
+              
+              {% for collection in collections%}
+              	{% if collection.show? %}
+              		<li class="list-inline-item mr-4">
+                  		<a href="{{ collection.url }}">{{ collection.title }}</a>
+                      	{% if collection.subcollections.size > 0 %}
+                        	<ul class="list-unstyled submenu">
+                            	{% for subcollection in collection.subcollections %}
+                                	<li><a href="{{ subcollection.url }}"{% if subcollection.current? %} class="active"{% endif %}>{{ subcollection.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+              		</li>
+              	{% endif %}
+              {% endfor %}
+              
+              <!--li class="list-inline-item mr-4">
+                <a href="#">для нее</a>
+                <ul class="list-unstyled submenu">
+                  <li><a href="#">Нижнее белье</a></li>
+                  <li><a href="#">Одежда для дома и сна</a></li>
+                  <li><a href="#">Майки и футболки</a></li>
+                  <li><a href="#">Купальники</a></li>
+                  <li><a href="#">Носки и колготки</a></li>
+                  <li><a href="#">Корректирующее бельё</a></li>
+                  <li><a href="#">Для беременных</a></li>
+                </ul>
+              </li>
+              <li class="list-inline-item mr-4">
+                <a href="#">для него</a>
+                <ul class="list-unstyled submenu">
+                  <li><a href="#">Нижнее белье</a></li>
+                  <li><a href="#">Одежда для дома и сна</a></li>
+                  <li><a href="#">Майки и футболки</a></li>
+                  <li><a href="#">Купальный ассортимент</a></li>
+                  <li><a href="#">Термобельё</a></li>
+                  <li><a href="#">Носки</a></li>
+                </ul>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">дети</a>
+                <ul class="list-unstyled submenu">
+                  <li><a href="#">Носки и колготки</a></li>
+                </ul>
+              </li-->
+            </ul>
+          </li>
+          <li class="col-12 col-md-4 text-center px-0">
+            <a href="/"><img src="{{ 'logo.png' | asset_url}}" /></a>
+          </li>
+          <li class="col-12 col-md-4 pr-0 d-flex align-items-center justify-content-end">
+            <span class="phone d-inline-block mr-5">8 800 00 000 00</span>
+            <i class="fa fa-fw f-lg fa-search mr-3"></i>
+            <i class="fa fa-fw f-lg fa-shopping-bag"></i>
+          </li>
+        </ul>
+    </section>
+
+    <section class="container d-block d-md-none">
+      <div class="row">
+        <li class="col-12 px-0">
+          <a href="/"><img src="{{ 'logo.png' | asset_url}}" /></a>
+        </li>
+      </div>
+    </section>
+
+  {{ content_for_layout }}
+
+    <section class="container footer">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>{{ linklists.spravka.title}}</h3>
+          <ul class="list-unstyled pl-4 mt-4">
+            {% for link in linklists.spravka.links %}
+            	<li><a href="{{link.url}}">{{link.title}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h3>{{ linklists.kompaniya.title}}</h3>
+          <ul class="list-unstyled pl-4 mt-4">
+             {% for link in linklists.kompaniya.links %}
+            	<li><a href="{{link.url}}">{{link.title}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h3>Контакты</h3>
+          <ul class="list-unstyled pl-4 mt-4">
+            <li>Тел. (495) 000-00-00, </li>
+            <li>8-000-000-00-00</li>
+            <li>E-mail: <a href="mailto:love@mail.ru">love@mail.ru</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  
+  
+  
+ {% comment %}
+	   <div id="header-container">
+            <div id="header">
+                <div id="header-top">
+                    <div id="logo">
+                      <a href="/" title="{{ title | escape }}"><img alt="{{ title | escape }}" src="{{ 'logo-eshop.png' | asset_url }}" /></a>
+                    </div>
+                    <ul id="phone">
+                      {% comment %}
+                      <li>
+                        <span>8 800</span> 500-54-91
+                        <em>звонок по России бесплатный</em>
+                      </li>
+                      <li><span>8 495</span> 545-45-20</li>
+                      {% endcomment %}
+                    </ul>
+                    <div id="subscribe">
+                      <!--form action="http://atlantic-shop.us2.list-manage.com/subscribe/post?u=bcddffe8e5547bb783bf5a4fd&amp;id=a89443e39c" method="post"-->
+                      <form action="/page/podpiska-na-novosti" method="post">
+                        подписка на новости <input type="text" size="24"  value="Ваш электронный адрес"/>
+                      <input type="image" src="{{ 'add-newsletter.png' | asset_url }}" />
+                      </form>
+                      	<div id="cart">
+                          <div id="cart_title">
+                            <a href="/cart_items">КОРЗИНА</a>
+                          </div>
+                            <div id="cart_info">
+                              <span class="parse_total_count">{{ cart.items_count }}</span> тов / <span class="parse_total_price">{{ cart.items_price | money }}</span></div>
+                        </div>
+                        <div id="login">
+                      		<a href="http://www.atlantic-shop.ru/client_account/login">Личный кабинет</a> | 
+                      		<a href="http://www.atlantic-shop.ru/client_account/contacts/new">Регистрация</a>
+                    	</div>
+                    </div>
+                </div>
+                <div id="header-bottom">
+                    <ul id="menu">
+                      {% for collection in collections %}
+                      	{% if collection.show? %}
+                       		<li>
+                              
+                              {% if collection.title contains 'Распродажа' %}
+                            	<a href="{{ collection.url }}" class="redlink">{{ collection.title }}</a>
+                              {% endif %}
+                              
+                              {% unless collection.title contains 'Распродажа' %}
+                            	<a href="{{ collection.url }}"{% if collection.current? %} class="active"{% endif %}>{{ collection.title }}</a>
+                              {% endunless %}
+                              
+                              {% if collection.subcollections.size > 0 %}
+                              			<ul>
+                                          {% for subcollection in collection.subcollections %}
+                                          <li><a href="{{ subcollection.url }}"{% if subcollection.current? %} class="active"{% endif %}>{{ subcollection.title }}</a></li>
+                                          {% endfor %}
+                              			</ul>
+                              		{% endif %}
+                      		</li>
+                      	{% endif %}
+                      {% endfor %}
+                      <li>
+                        <a href="#">Акции</a>
+                        <ul>
+                          {% for item in linklists.akcii-now.links %}
+                          <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      
+                      <li>
+                        <a href="#" class="redlink">OUTLET</a>
+                        <ul>
+                          <li><a href="/collection/dlya-zhenschin">Для женщин</a></li>
+						  <li><a href="/collection/dlya-muzhchin">Для мужчин</a></li>	
+                        </ul>
+                      </li>
+                      
+                      <li>
+                        <a href="/page/nizhnee-belie-optom">ОПТ</a>
+                      </li>
+                      
+                    </ul>  
+                  <div id="search">
+                  	<form class="clearfix" id="searchForm" action="{{ search_url }}" method="get">
+          {% if language.not_default? %} <input type="hidden" name="lang" value="{{ language.locale }}"> {% endif %}
+          <fieldset>
+            <legend>Поиск:</legend>
+            <input type="text" class="text placeHolder" name="q" id="searchPhrase" value="{% if search.query == nil %}Поиск{% else %}{{search.query | escape}}{% endif %}"
+                     onfocus="if(this.value==this.defaultValue){this.value='';}"
+                     onblur="if(this.value==''){this.value=this.defaultValue;}"
+               />
+            <input type="image" class="hideGirl image" value="Искать" src="{{ 'inpSearch.jpg' | asset_url }}"/>
+            <a href="#" onClick="$('#searchForm').submit(); return false;"></a>
+          </fieldset>
+        </form>
+
+                  </div>                
+                </div>
+            </div>
+        </div>
+  		
+  
+  		<div id="center-container">
+            <div id="center">
+                  {{ content_for_layout }}
+                <div class="cb"></div>
+            </div>
+        </div>
+  
+  		
+  		<div id="footer-container">
+            <div id="footer">
+                <div id="footer-info">
+                <div class="fblock">
+                    <h3>О компании</h3>
+                  <p><a href="/page/О-нас">О нас</a></p>
+                  <p><a href="/blog">Наш блог - Новости</a></p>
+                    <!--p>Работа в ATLANTIC</p-->
+                  <p><a href="/page/franchayzing">Франчайзинг</a></p>
+                  <!--p>Бренд ATLANTIC</p-->
+                  <p><a href="/page/prmedia">PR/MEDIA</a></p>
+                  <p><a href="http://www.atlantic-shop.ru/page/%D0%90%D0%B4%D1%80%D0%B5%D1%81%D0%B0">Адреса магазинов</a></p>
+                  <p><a href="/page/Реквизиты">Контакты</a></p>
+                </div>
+                <div class="fblock">
+                    <h3>Мой аккаунт</h3>
+                  <p><strong><a href="/page/ostorozhno-moshenniki">Осторожно, мошенники</a></strong></p>
+                  	<p><a href="/page/Политика-конфиденциальности">Политика конфеденциальности</a></p>
+                    <!--p>Безопасность</p-->
+                  	<p><a href="/page/Условия-возврата-и-обмена-товаров">Условия возврата товара</a></p>
+                  	<p><a href="/page/delivery_and_payment">Оплата и доставка</a></p>
+                    <!--p>Cпособы оплаты</p-->
+                    <p><a href="http://www.atlantic-shop.ru/page/Часто-задаваемые-вопросы">Часто задаваемые вопросы<a></p>
+                    <!--p>Найти на складе</p-->
+                </div>
+                <div class="fblock">
+                    <h3>Полезная информация</h3>
+                  <p><a href="/page/Уход-за-нижним-бельем">Инструкции по уходу за нижним бельем</a></p>
+                  <p><a href="/page/Таблица-размеров">Таблицы размеров</a></p>
+                  <p><a href="/page/Materialy-i-tehnologii-ispolzuemye-pri-proizvodstve-nizhnego-belya-Atlantic">Ткани и материалы</a></p>
+                  <p><a href="/page/arhiv-nashih-aktsiy">Архив наших акций</a></p>
+                    <!--p>Информация на этикетке</p>
+                    <p>Как выбрать бюстгальтер</p>
+                    <p>Как определить размер бюстгальтера</p>
+                    <p>Предназначение Вашего бюстгальтера</p-->
+                </div>
+                  <div class="pictograms">
+                    <a href="http://vk.com/club27559949" target="_blank"><img src="{{ 'VK.png' | asset_url }}" /></a>
+                    <a href="http://www.odnoklassniki.ru/atlanticrussia" target="_blank"><img src="{{ 'OK.png' | asset_url }}" /></a>
+                    <a href="http://www.facebook.com/pages/FANPAGE-ATLANTIC-%D0%BD%D0%B8%D0%B6%D0%BD%D0%B5%D0%B5-%D0%B1%D0%B5%D0%BB%D1%8C%D0%B5-%D0%B4%D0%BB%D1%8F-%D0%BC%D1%83%D0%B6%D1%87%D0%B8%D0%BD-%D0%B8-%D0%B6%D0%B5%D0%BD%D1%89%D0%B8%D0%BD/121776894586089" target="_blank" ><img src="{{ 'FB.png' | asset_url }}" /></a>
+                    <a href="https://instagram.com/atlanticrussia" target="_blank"><img src="{{ 'igslog.png' | asset_url }}" /></a>
+                  	<!--LiveInternet logo--><a href="http://www.liveinternet.ru/click"
+target="_blank"><img src="//counter.yadro.ru/logo?44.5"
+title="LiveInternet"
+alt="" border="0" width="31" height="31"/></a><!--/LiveInternet-->
+                  </div>
+                <div class="cb"></div>
+                </div>
+            </div>
+            <div id="subfooter">
+                <strong>ООО ВИЗ РС</strong>, ул. Нижняя Красносельская, д. 13, стр. 1, Москва, Российская федерация. тел. 8 800 500-5-491, (495) 545-45-20, понедельник-пятница с 9<sup>00</sup> до 18<sup>00</sup>
+            </div>
+        </div>
+  <div id="footer_float">
+    <div id="content">
+       <div  id="footer_float_left">
+        <a href="/page/podpiska-na-novosti">Подпишись на рассылку и получи подарок</a>
+      </div>
+      <div id="footer_float_right">
+        <p><a href="/page/delivery_and_payment">Доставка</a></p>
+        <p><a href="/page/kak-oformit-zakaz">Как оформить заказ</a></p>
+        <p><a href="/page/Таблица-размеров">Таблицы размеров</a></p>
+        <p><a href="#">Варианты оплаты</a></p>
+        <p class="sfa"><a href="http://www.atlantic-shop.ru/collection/predlozhenie-nedeli">Предложение<br>недели</a></p>
+      </div>
+    </div>
+  </div>
+{% endcomment %}
+</body>
+
+</html>
+

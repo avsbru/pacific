@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+html{
+  //font-size: 10px;
+}
+.header{
+
+}
+.menu{
+  font-family: Roboto;
+  position: relative;
+
+font-size: 14px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 24px; /* Приближение из-за подстановки шрифтов */
+text-align: left;
+}
+.menu a{
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+}
+.menu li > a:hover{
+  border-bottom: 9px #eaecec solid;
+  text-decoration: none;
+  color: #000000;
+}
+.menu li:hover > ul {
+  display:block;
+}
+.menu ul{
+  display: none;
+  position:absolute;
+  background: #ffffff;
+  z-index: 100;
+  top: 100%;
+  border: 1px #d5d5d5 solid;
+  padding: 2rem 0;
+}
+.menu ul li{
+  min-width: 17rem;
+  padding: 0 2rem;
+}
+.menu ul li:hover{
+  background: #a7aeb1;
+}
+.menu ul li > a:hover{
+  text-decoration: none;
+  color: #000000;
+  border-bottom: none;
+}
+
+.phone{
+  font-family: Roboto;
+color: #000000;
+font-size: 18px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 24px; /* Приближение из-за подстановки шрифтов */
+text-align: right;
+}
+.bgbannner{
+  position: relative;
+}
+.signbanner{
+  position: absolute;
+  bottom: 100px;
+  left: 120px;
+}
+.dials h2, .novinki h2, .brands h2{
+  font-family: 'Open Sans';
+  letter-spacing: 2px;
+  color: #000000;
+  font-size: 24px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 600;
+  line-height: 24px;/* Приближение из-за подстановки шрифтов */
+  text-align: center;
+}
+.carousel-control-next-icon{
+  width: 11px;
+  height: 34px !important;
+  position: relative;
+  left: 3rem;
+  color: #000000;
+  background-image: url('nextarrow.png') !important;
+}
+.carousel-control-prev-icon{
+  width: 11px;
+  height: 34px !important;
+  position: relative;
+  right: 3rem;
+  color: #000000;
+  background-image: url('prevarrow.png') !important
+  /*background-image: url("../img/prevarrow.png") !important;*/
+}
+.infoblock1{
+  left: 57% !important;
+  right: 0 !important;
+  bottom: 20px !important;
+  width: 50%;
+  text-align: left !important;
+}
+.infoblock1 h3{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 18px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 800;
+  line-height: 24px;/* Приближение из-за подстановки шрифтов */
+  text-transform: uppercase;
+}
+.usl{
+  font-family: Roboto;
+  color: #ffffff;
+  font-size: 14px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 24px;/* Приближение из-за подстановки шрифтов */
+}
+.sale-price{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 18px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 24px;/* Приближение из-за подстановки шрифтов */
+  text-transform: uppercase;
+}
+.sale-buy{
+  font-family: Roboto;
+  color: #ffffff;
+  font-size: 14px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 24px;/* Приближение из-за подстановки шрифтов */
+  border: 1px #ffffff solid;
+  /*border: 3px #c1beb9 solid;*/
+  padding: 2px 10px;
+}
+.sale-buy:hover{
+  text-decoration: none;
+  color: #ffffff;
+}
+.infoblock2{
+  position: relative !important;
+  /*border: #f00 1px solid;*/
+  bottom: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  color: #000000 !important;
+  padding: 0 !important;
+}
+.infoblock2 h4{
+  font-family: Roboto;
+  color:   #000000;
+  font-size: 14px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 800;
+  line-height: 24px;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+}
+.sku-params{
+  text-align: left;
+  color: #a7aeb1;
+}
+.sku-price{
+  font-family: Roboto;
+  text-align: left;
+  font-size: 16px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 800;
+}
+.img-novinki{
+  max-height: 90%;
+  width: auto;
+}
+.footer h3{
+  font-family: Roboto;
+  color:#000000;
+  font-size: 14px;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 24px;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+  text-transform: uppercase;
+}
+.footer ul{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 14px; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 24px; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.footer ul li > a{
+  color: #000000;
+}

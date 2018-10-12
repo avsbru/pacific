@@ -1,0 +1,116 @@
+<div class="container">
+  <h1>{{ page.title }}</h1>
+  {{ page.content }}
+</div>
+{% comment %}
+<div class="clearfix" id="contentHead"><h2><span></span></h2></div>
+<div id="contentBody">
+  {% if page.title contains 'Адреса' %}
+    <div class="address_block">
+      <div class="address_image">
+        <div id="YMapsID">
+          
+        </div>
+        &nbsp;
+      </div>
+      <div class="address_content">
+        <div class="address_select">
+          <h3>Магазины</h3>
+        </div>
+        <div class="address_list">
+          {{ page.content }}
+        </div>
+        <p class="notice">«Внимание! Цены в розничных магазинах могут отличаться от цен на сайте».</p>
+      </div>
+    </div>
+    
+    <script src="http://api-maps.yandex.ru/1.0/?key=AGIOaUwBAAAANW9HaQIATZ7KNyw0Zk_oJhlkNPvAMOUhFqYAAAAAAAAAAABRKwGZpPruoaU0gStCpk_Bbrtk1g==" type="text/javascript"></script>
+    <script type="text/javascript">
+        var map, geoResult;
+
+      function init () {
+           map = new YMaps.Map(document.getElementById("YMapsID"));
+           map.setCenter(new YMaps.GeoPoint(37.651503,55.780176), 15,
+           YMaps.MapType.MAP);
+           map.addControl(new YMaps.TypeControl());
+           map.addControl(new YMaps.Zoom());
+           map.addControl(new YMaps.MiniMap());
+           //map.addControl(new YMaps.ToolBar());
+           //map.addControl(new YMaps.ScaleLine());
+        }
+
+        function showAddress (value,description) {
+            map.removeOverlay(geoResult);
+            if(value == false) return; 
+            var geocoder = new YMaps.Geocoder(value, {results: 1, boundedBy: map.getBounds()});
+
+            YMaps.Events.observe(geocoder, geocoder.Events.Load, function () {
+                if (this.length()) {
+                    geoResult = this.get(0);
+                    geoResult.setIconContent(description);
+                    map.addOverlay(geoResult);
+                    map.setBounds(geoResult.getBounds());
+                }else {
+                    alert("Ничего не найдено")
+                }
+            });
+
+           YMaps.Events.observe(geocoder, geocoder.Events.Fault,
+           function (error) {alert("Произошла ошибка: " + error.message)});
+
+        }
+      
+        function showCity(city){
+          $(".address_list ol").hide();
+        $(".address_list ol[city='"+city+"']").show();
+        showMap($(".address_list ol[city='"+city+"'] li a:first"));
+        }
+
+      function showMap(el){
+        var descr = "";
+         $(".address_list ol li a").removeClass("active");
+         $("#YMapsID").hide();
+         if($(el).length){
+           $(el).addClass("active");
+           $("#YMapsID").show();
+           
+          descr = $(el).parent().children("strong").html();
+          if(!descr) descr = $(el).parent().children("em").html();
+           showAddress($(el).attr("href").substr(1),descr);
+         } else {
+           showAddress(false);  
+         }
+      }
+
+        $(function(){         
+         init();
+
+        var select = $("<select></select>").attr("id","address_select").bind("change",function(){ 
+          showCity($(this).val());
+        });
+
+         $('.address_select').append(select);
+
+         $(".address_list h2").each(function(i,v){
+           var city = $(this).text();
+           
+           var option = $("<option></option>");
+           $("#address_select").append($(option).text(city).val(city));
+           
+           $(this).next("ol:first").attr("city",city);
+         }).hide();
+         
+         $(".address_list ol li").find("a:first").addClass("ajax").bind("click",function(event){
+          event.preventDefault();
+           showMap($(this));
+         });
+         showCity($("#address_select").val());
+        });
+      </script>
+  {% else %}
+    {{ page.content }}
+  {% endif %}
+</div>
+<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki"></div>
+{% endcomment %}

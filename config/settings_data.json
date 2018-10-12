@@ -1,0 +1,15 @@
+{
+  "current": "custom",
+  "presets": {
+    "custom": {
+      "showCoupon": "1",
+      "couponCode": "time",
+      "couponStart": "12:00:00",
+      "couponEnd": "16:00:00",
+      "_settings_version": 1522652579.98516
+    }
+  },
+  "remote_theme_id": null,
+  "source_account_id": null,
+  "theme_title": "Beta"
+}

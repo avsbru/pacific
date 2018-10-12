@@ -1,0 +1,34 @@
+<div id="shopContent">
+
+	<h2>«{{search.query | escape}}»</h2>
+	{% if search.performed? %}
+	    {% if search.results == empty %}
+	    	<p>По запросу «{{search.query | escape}}» ничего не найдено, попробуйте переформулировать или упростить запрос</p>
+	    {% else %}
+			<p>По запросу «{{search.query | escape}}» найдено {{ results.size }} товаров.</p>
+			{% paginate results by 16 %}
+				<div id="productList">
+					<div class="productListWrap clearfix">
+					    {% for product in results %}{% include 'product_view' %}{% endfor %}
+					</div>
+			    </div>
+
+			     {% if paginate.pages > 1 %}
+			       <div class="pager accent">
+			         Страницы: &nbsp; {{ paginate | default_pagination }}
+			       </div>
+			     {% endif %}
+			{% endpaginate %}
+	    {% endif %}
+	{% endif %}
+</div>
+<script>
+    $(function(){
+        $('span.avaiableProductColor img').each(function(index) {
+            var color = get_color($(this).attr('src'),{sku:$(this).attr('data-sku')});
+            $(this).attr('alt', color);
+            $(this).attr('title', color);
+        });
+    });
+</script>
+

@@ -1,0 +1,69 @@
+/* ========================================================================= */
+/*
+/* ie6.css - media: screen (only for IE6) */
+/*
+/* ========================================================================= */
+
+/* ========================================================================= */
+/*   GENERIC STYLES */
+/* ========================================================================= */
+body { font-size:12px; }
+/* for clearfix ---------------------------------------------------------------- */
+.clearfix,.clearfix1 { /* naprawienie problemu float IE/MAC */
+  display: inline-block;
+}
+.clearfix,.clearfix1{ /* Holly Hack dla IE Win + IE Mac hide \*/
+  height: 1%;
+}
+.clearfix,.clearfix1{ /* Holly Hack cd. */
+  display: block;
+}
+
+.alpha{
+  position: relatvie;
+}
+.background{
+  overflow-x: hidden;
+}
+
+#navShopCat a { zoom:1; }
+#navShop {margin-left: -5px;}
+
+.navSubShop{
+  filter: alpha(opacity:90);
+  background: transparent url(../images/navSubShopTop.gif) no-repeat 0 10px;
+}
+.navSubShop ul{
+  filter: alpha(opacity:90);
+  background: transparent url(../images/navSubShop.gif) no-repeat 0 100%;
+}
+li#navShopMan .navSubShop ul{
+  filter: alpha(opacity:90);
+  background: transparent url(../images/navSubManShop.gif) no-repeat 0 100%;
+}
+.ui-selectmenu{
+  margin-left: 3px;
+}
+#productDetails form select {
+  margin-top:1px;
+  margin-bottom:1px;
+}
+body.shop .paginationList p{
+  line-height: 22px;
+}
+
+#productPhoto a.defaultPhoto img { }
+.thumb .prodImg { }
+
+
+.thumb a.picture span.thumbMore{ left:179px; width: 92px; zoom:1; }
+.thumb a.picture:hover span.thumbMore{ left:110px; width: 92px; }
+
+.thumbSmall a.picture span.thumbMore{ top: 0; left: 85px; width: 91px; zoom:1; }
+.thumbSmall a.picture:hover span.thumbMore{ left:16px; width: 91px; }
+
+#contentHead { zoom:1; }
+#contentHead h2 { position:relative; z-index:100; float: none; zoom: 1; display: inline; margin-right:20%; }
+#contentHead span { float: none; zoom: 1; display: inline; white-space:nowrap; width:0%; }
+
+/* end */

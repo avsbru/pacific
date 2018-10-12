@@ -1,0 +1,12 @@
+ <div class="tn1">
+    <a title="{{ product.title | escape }}" href="{{ product.url }}">
+  	 	<img alt="{{ product.title | escape }}" src="{{ product.first_image.medium_url }}" />
+      <p>{{ product.title | escape }}</p>
+      <span class="tovar_cvet mpn">
+      	{% for image in product.images %}
+               {% if image.url contains '_mini' %}<img src="{{ image.small_url }}" alt="{{ image.title }}" title="{{ image.title }}" data-sku="{{product.variants.first.sku}}">{% endif %}
+            {% endfor %}
+      </span>
+    </a>
+   <p class="thprice">{{ product.sale_price | replace: '.0','' }}<sup>00</sup></p>
+  </div>

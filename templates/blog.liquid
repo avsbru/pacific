@@ -1,0 +1,22 @@
+<div class="clearfix" id="contentHead"><h2><span>Новости</span></h2></div>
+<div class="clearfix" id="contentBody">
+	{% paginate articles by 10 %}
+	    {% for article in articles %}
+	        <a name="article-{{ article.id }}"></a>
+			<h3><a href="{{ article.url }}">{{ article.title }}</a> / <small class="date">{{ article.created_at | date: "%d.%m.%Y" }}</small></h3>
+			<div class="editor-content">
+				<p>{{ article.content | strip_html | truncatewords: 40 }}</p>
+	        </div>
+	    {% endfor %}
+		
+	    {% if paginate.pages > 1 %}
+	    <div class="pagination">
+	        {{ paginate | default_pagination }}
+	    </div>
+	    {% endif %}
+	
+	{% endpaginate %}
+</div>
+
+<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+    <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki"></div>

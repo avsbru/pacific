@@ -1,0 +1,53 @@
+<div class="thumb">
+	{% if product.old_price %}
+  	{% if product.old_price !=0 %}
+  		<div class="znizhka">
+      		<span>{{product.sale_price | divided_by: product.old_price | times: 100 | minus: 100 | money | remove: ' руб'}}%</span>
+  		</div>
+  		{% endif %}
+      {% endif %}  
+    <a title="{{ product.title | escape }}" class="picture" href="{{ product.url }}">
+        <img alt="{{ product.title | escape }}" src="{{ product.first_image.medium_url }}" class="prodImg centerImg" />
+      </a>
+  
+    <div class="tovar_svoistva">
+        <div class="item_name"><a href="{{ product.url }}">{{ product.title | escape | truncate:38 }}</a></div>
+      <div class="item_price">
+      {% if product.price_varies? %}
+                {{ product.price_min | money }}  - {{ product.price_max | money }}
+            {% else %}
+        
+                {% if product.old_price %}
+        			<span class="item_new_price">{{ product.sale_price | money }}</span>
+        		{% if product.old_price !=0 %}
+        			<span class="item_price_old">{{ product.old_price | money }}</span>
+        		{% endif %}
+        		{% else %}
+        			<span class="item_price">{{ product.sale_price | money }}</span>
+        		{% endif %}
+            {% endif %}
+      </div>
+      	<span class="tovar_cvet">
+            {% for image in product.images %}
+               {% if image.url contains '_mini' %}<img src="{{ image.small_url }}" alt="{{ image.title }}" title="{{ image.title }}" data-sku="{{product.variants.first.sku}}">{% endif %}
+            {% endfor %}
+          <div class="cb"></div>
+        </span>
+      {% if product.properties.status.characteristics.first.name == "Новинка" %}
+      <div class="item_novinka">Новинка</div>
+      {% endif %}
+      {% if product.properties.status.characteristics.first.name == "Распродажа" %}
+      <div class="item_sale">Распродажа</div>
+      {% endif %}
+      {% if product.properties.status.characteristics.first.name == "ПОСЛЕДНИЙ РАЗМЕР" %}
+      <div class="item_novinka">{{product.properties.status.characteristics.first.name}}</div>
+      {% endif %}
+      {% if product.properties.status.characteristics.first.name == "Новые поступления" %}
+      <div class="item_novinka">Новые поступления</div>
+      {% endif %}
+      {% if product.properties.status.characteristics.first.name == "ПРЕДЛОЖЕНИЕ НЕДЕЛИ" %}
+      <div class="item_novinka">ПРЕДЛОЖЕНИЕ НЕДЕЛИ</div>
+      {% endif %}
+    </div>
+</div>
+

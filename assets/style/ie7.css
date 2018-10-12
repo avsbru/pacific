@@ -1,0 +1,80 @@
+/* ========================================================================= */
+
+/*
+
+/* ie7.css - media: screen (only for IE7) */
+
+/*
+
+/* ========================================================================= */
+
+
+
+/* ========================================================================= */
+
+/*   GENERIC STYLES */
+
+/* ========================================================================= */
+
+
+
+/* for clearfix ---------------------------------------------------------------- */
+
+.clearfix,.clearfix1{ /* naprawienie problemu float IE/MAC */
+
+  display: inline-block;
+
+}
+
+.clearfix { /* Holly Hack dla IE Win + IE Mac hide \*/
+
+  height: 1%;
+
+}
+
+.clearfix,.clearfix1 { /* Holly Hack cd. */
+
+  display: block;
+
+}
+
+
+
+#lightbox-container-image-box > #lightbox-nav { left: 0; }
+
+#lightbox-nav a { outline: none;}
+
+#lightbox-nav-btnPrev, #lightbox-nav-btnNext {
+
+  zoom: 1;
+
+}
+
+
+
+.background{
+
+  overflow-x: hidden;
+
+}
+
+body.shop .paginationList p{
+
+  line-height: 24px;
+
+}
+
+
+
+.paginationList{
+
+  height: auto;
+
+}
+
+
+
+#productPhoto a.defaultPhoto img { width:370px; }
+
+
+/* end */

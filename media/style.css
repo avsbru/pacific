@@ -20,7 +20,7 @@ text-align: left;
   color: #000000;
   text-decoration: none;
 }
-.menu>a:hover{
+.menu li > a:hover{
   border-bottom: 9px #eaecec solid;
   text-decoration: none;
   color: #000000;
@@ -38,7 +38,7 @@ text-align: left;
   padding: 2rem 0;
 }
 .menu ul li{
-  min-width: 16rem;
+  min-width: 17rem;
   padding: 0 2rem;
 }
 .menu ul li:hover{
@@ -47,6 +47,7 @@ text-align: left;
 .menu ul li > a:hover{
   text-decoration: none;
   color: #000000;
+  border-bottom: none;
 }
 
 .phone{
@@ -65,8 +66,9 @@ text-align: right;
   bottom: 100px;
   left: 120px;
 }
-.dials h2, .novinki h2{
+.dials h2, .novinki h2, .brands h2{
   font-family: 'Open Sans';
+  letter-spacing: 2px;
   color: #000000;
   font-size: 24px;/* Приближение из-за подстановки шрифтов */
   font-weight: 600;
@@ -79,7 +81,7 @@ text-align: right;
   position: relative;
   left: 3rem;
   color: #000000;
-  background-image: url("../img/nextarrow.png") !important;
+  background-image: url('nextarrow.png') !important;
 }
 .carousel-control-prev-icon{
   width: 11px;
@@ -87,7 +89,8 @@ text-align: right;
   position: relative;
   right: 3rem;
   color: #000000;
-  background-image: url("../img/prevarrow.png") !important;
+  background-image: url('prevarrow.png') !important
+  /*background-image: url("../img/prevarrow.png") !important;*/
 }
 .infoblock1{
   left: 57% !important;
@@ -126,6 +129,7 @@ text-align: right;
   font-weight: 400;
   line-height: 24px;/* Приближение из-за подстановки шрифтов */
   border: 1px #ffffff solid;
+  /*border: 3px #c1beb9 solid;*/
   padding: 2px 10px;
 }
 .sale-buy:hover{

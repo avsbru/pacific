@@ -1,0 +1,45 @@
+{% if settings.showCoupon == '1' and template == 'cart' %}
+<script>
+$(function(){  	
+  	if($('.coupon input[type="text"]').val() === 'time'){
+        var currentTime = new Date()
+        var hours = currentTime.getHours();
+        var start = {{ settings.couponStart | round:1 | replace: '.0', '' }};
+        var end = {{ settings.couponEnd | round:1 | replace: '.0', '' }};
+        var code = '{{settings.couponCode }}';
+
+        if(hours >= start && hours < end){	
+            $.ajax({
+                url: '/cart_items.json',
+                type: 'post',
+                data: '_method=put&cart[coupon]='+code,
+                success: function(response){
+                    if(response.discount_description){
+                        $.each(response.discounts, function(){
+                            var item = this;
+                            var description = item.description;
+                            var price = InSales.formatMoney(item.amount, '{{money_with_currency_format}}')
+                            $('.discounts').html('<strong>'+description+':</strong> <span class="big">'+price+'</span><br clear="all" />');
+                            $('.discounts').show();
+                        })   
+                    }
+                    $('.cartSum dd, .parse_total_price').html(InSales.formatMoney(response.total_price, '{{money_with_currency_format}}'));
+                    $('.coupon input[type=text]').val('time');
+                }
+            });
+        }else{
+            $.ajax({
+                url: '/cart_items.json',
+                type: 'post',
+                data: '_method=put&cart[coupon]=',
+                success: function(response){
+                    $('.discounts').hide();
+                    $('.cartSum dd, .parse_total_price').html(InSales.formatMoney(response.total_price, '{{money_with_currency_format}}'));
+                    $('.coupon input[type=text]').val('');
+                }
+            });
+        }    	
+    }
+})
+</script>
+{% endif %}
