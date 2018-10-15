@@ -12,46 +12,97 @@
       	{% endfor %}
     </ul>
     <div class="col-md-8 catalog-list">
+      <h1>{{ collection.title }}</h1>
       <div class="row">
-      aaa
-     	<div class="col-md-3">
- 			<div class="product">
- 				<div class="product-img">
- 					<a href="#"><img src="img/goods1.jpg" alt=""></a>
- 				</div>
- 				<p class="product-title">
- 					<a href="#">Cream jane jeans dress</a>
- 				</p>
- 				<p class="product-desc">Signature NYX cosmetics</p>
- 				<p class="product-price">Price: €10.00</p>
- 			</div>
- 		</div>
+        {% if products.size == 0 %}
+          <p>В категории нет товаров</p>
+        {% endif %}
+        {% if products.size > 0 %}
+          {% paginate products by 15 %}
 
-      	<div class="col-md-3">
- 			<div class="product">
- 				<div class="product-img">
- 					<a href="#"><img src="img/goods1.jpg" alt=""></a>
- 				</div>
- 				<p class="product-title">
- 					<a href="#">Cream jane jeans dress</a>
- 				</p>
- 				<p class="product-desc">Signature NYX cosmetics</p>
- 				<p class="product-price">Price: €10.00</p>
- 			</div>
- 		</div>
+          <div class="paginationList clearfix order-form">
+            <form id="options" action="{{collection.url}}" method="get" class="variants">
+              {% if language.not_default? %} <input type="hidden" name="lang" value="{{ language.locale }}"> {% endif %}
+              <table style="float:left">
+                  <tr>
+                      {% for option in collection.options %}
+                      {% if option.values.size > 1 %}
+                         {% if option.title == 'Размер' %}
+                      <td>
+                        <span style="font-size: 1.1em; color: #8F7F8E;">Выбрать размер: </span>
+                          <select name="options[{{option.id}}][]" class="options" style="margin-top: -2px;" >
+                              <option value=""></option>
+                              {% for value in option.values %}
+                              <option value="{{value.id}}" {% if value.selected %}selected{% endif %}>{{value.title}}</option>
+                              {% endfor %}
+                          </select>
+                      </td>
+                      {% else %}
+                      {% endif %}
+                      {% endif %}
+                      {% endfor %}
+                  </tr>
+              </table>
 
-      	<div class="col-md-3">
- 			<div class="product">
- 				<div class="product-img">
- 					<a href="#"><img src="img/goods1.jpg" alt=""></a>
- 				</div>
- 				<p class="product-title">
- 					<a href="#">Cream jane jeans dress</a>
- 				</p>
- 				<p class="product-desc">Signature NYX cosmetics</p>
- 				<p class="product-price">Price: €10.00</p>
- 			</div>
- 		</div>
+
+              <label for="order">Сортировать по:</label>
+                  <select name="order" id="order" class="params options">
+                    {{ "" | select_option: order, "" }}
+                    {{ "price"  | select_option: order, "По возрастанию цены" }}
+                    {{ "descending_price"  | select_option: order, "По убыванию цены" }}
+                    {{ "title"  | select_option: order, "Названию" }}
+                  </select>
+
+                 <label for="page_size">На странице по:</label>
+                  <select name="page_size" id="page_size" class="params options">
+                    {{ "18" | select_option: page_size, "18 товаров" }}
+                    {{ "36"  | select_option: page_size, "36 товара" }}
+                    {{ "72"  | select_option: page_size, "72 товара" }}
+                  </select>
+            </form>
+
+              {% if paginate.pages > 1 %}
+              <div class="pagination">
+                  <ul class="clearfix">
+                    {% if paginate.previous %}
+                    <li class="pagPrev">{{ '&laquo;' | link_to: paginate.previous.url}}</li>
+                    {% endif %}
+                        {% for part in paginate.parts %}
+                          <li {% if forloop.last? and paginate.previous == nil %}class="last"{% endif %}>
+                              {% if part.is_link %}
+                                  {{ part.title | link_to: part.url }}
+                              {% else %}
+                                  <strong>{{ part.title }}</strong>
+                              {% endif %}
+                            </li>
+                        {% endfor %}
+                        {% if paginate.next %}
+                      <li class="pagNext last">{{ '&raquo;' | link_to: paginate.next.url }}</li>
+                    {% endif %}
+                    </ul>
+              </div>
+              {% endif %}
+          </div>
+
+
+          {% for product in products %}
+         	  <div class="col-md-4">
+     			      <div class="product">
+     				         <div class="product-img">
+     					         <a title="{{ product.title | escape }}" class="picture" href="{{ product.url }}">
+                         <img alt="{{ product.title | escape }}" src="{{ product.first_image.medium_url }}" class="prodImg centerImg" />
+                       </a>
+     				         </div>
+     				            <p class="product-title">
+     					                <a href="{{ product.url }}" title="{{ product.title }}">{{ product.title | escape | truncate:25 }}</a>
+     				            </p>
+     				            <p class="product-desc">{{ product.description | strip_html | truncate:60 }}</p>
+     				            <p class="product-price">Цена: {{ product.price | money }}</p>
+     			      </div>
+     		     </div>
+           {% endfor %}
+           {% endpaginate %}
+         {% endif %}
       </div>
  	</div>
   </div>
