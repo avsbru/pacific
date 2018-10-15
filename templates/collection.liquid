@@ -20,6 +20,7 @@
         {% if products.size > 0 %}
           {% paginate products by 15 %}
 
+          {% comment %}
           <div class="paginationList clearfix order-form">
             <form id="options" action="{{collection.url}}" method="get" class="variants">
               {% if language.not_default? %} <input type="hidden" name="lang" value="{{ language.locale }}"> {% endif %}
@@ -83,6 +84,7 @@
               </div>
               {% endif %}
           </div>
+          {% endcomment %}
 
 
           {% for product in products %}

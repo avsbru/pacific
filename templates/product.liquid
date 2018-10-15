@@ -6,36 +6,36 @@ $(function(){
     window.atlantic_product = new AtlanticProduct({{ product | json }});
 
   var product_colors_array = [];
-  $.each(window.atlantic_product.colors,function(i, col) {    
-            var color_new = col.replace(/\s\[.*?\]/g, "");   
+  $.each(window.atlantic_product.colors,function(i, col) {
+            var color_new = col.replace(/\s\[.*?\]/g, "");
             product_colors_array.push(color_new);
     });
-      
-  
+
+
     var images = {};
     $.each(product.images, function(index, image){
         var color = get_color(image.url);
-      
-        if($.inArray(color, product_colors_array) == -1) return;     
-        if (color ) {          
-           if ( images[color] == undefined) images[color] = {};    
+
+        if($.inArray(color, product_colors_array) == -1) return;
+        if (color ) {
+           if ( images[color] == undefined) images[color] = {};
            $.each(window.atlantic_product.colors,function(i, col) {
-    
+
             var color_new = col.replace(/\s\[.*?\]/g, "");
              if (color_new == color) {
               images[color].variant = col;
-             }    
+             }
          });
-          
-                         
+
+
             if ( image.url.match(/_mini\./) ) {
                 images[color].mini = image.url;
             } else {
                 images[color].origin = image.url;
             }
-        }      
-      
-    }); 
+        }
+
+    });
     var images_html = '';
     $.each(images, function(color, urls){
         images_html += '<li id="color_'+color+'"><img alt="' + urls.variant + '" src="' + urls.mini + '"' + (urls.origin ? ' rel="' + urls.origin + '"' : ' ') + '></li>';
@@ -121,10 +121,9 @@ $('#productDetails .pdColors ul li:first').trigger('click');
 });
 </script>
 
-
-<div class="clearfix" id="product">
-  <div class="clearfix" id="main">
-    <div id="productPhoto" style="position: relative;">
+<div class="container my-5" id="product">
+  <div class="row" id="main">
+    <div id="productPhoto col-md-3" style="position: relative;">
 
 	<!--
     {% if product.properties.status.characteristics.size %}
@@ -132,7 +131,7 @@ $('#productDetails .pdColors ul li:first').trigger('click');
           <img style="z-index: 1000;" id="productInfoEtykietProduct" alt="{{product.properties.status.characteristics.first.name}}" src="{{ status_image | asset_url }}">
         {% endif %}
 	-->
-      <span class="productPhoto clearfix">
+      <span class="productPhoto">
         <a href="{{ product.first_image.original_url }}" class="jqzoom defaultPhoto centerProdImg">
           <img alt="{{ product.title | escape }}" src="{{ product.first_image.large_url }}" style="opacity: 1;" class="">
         </a>
@@ -142,10 +141,10 @@ $('#productDetails .pdColors ul li:first').trigger('click');
         {% endif %}{% endcomment %}
       </span>
 
-                        {% assign show_common_photos = false %}
-                        {% capture sku %}{{product.variants.first.sku | replace:' ','_' | plus: '.jpg' }}{% endcapture %}
+    {% assign show_common_photos = false %}
+    {% capture sku %}{{product.variants.first.sku | replace:' ','_' | plus: '.jpg' }}{% endcapture %}
 
-                        <div class="secondPhotos clearfix">
+    <div class="secondPhotos clearfix">
         {% if product.images.size > 1 %}
                 {% for image in product.images %}
                                         <!-- выводим только крупные картинки -->
@@ -161,11 +160,15 @@ $('#productDetails .pdColors ul li:first').trigger('click');
       <div class="result"></div>
 
     </div>
-    <div id="productDetails">
+    <div id="productDetails" class="col-md-6">
       <form action="{{ cart_url }}" method="post" id="order" class="buy_form" >
         <div class="pdHead">
           <h2>{{ product.title | escape }}</h2>
           <p>Артикул: <span class="sku">{{ product.variants.first.sku }}</span></p>
+        </div>
+
+        <div class="full-descr">
+          {{product.description}}
         </div>
 
         <div class="pdPrice">
@@ -263,19 +266,13 @@ $('#productDetails .pdColors ul li:first').trigger('click');
           {% endif %}
         </fieldset>
       </form>
-    </div><!-- /#productDetails -->
-    <div class="full-descr">{{product.short_description}}</div>
-    <div class="full-descr">{{product.description}}</div>
-    
-    <!--  Yandex Share -->
-    <script type="text/javascript" src="//yandex.st/share/share.js"
-charset="utf-8"></script>
-<div class="yashare-auto-init" data-yashareL10n="ru"
- data-yashareType="none" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus"
+      <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+      <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus"></div>
 
-></div> 
-    {% include 'reviews' %}
-    <!-- End of Yandex Share-->
+    </div><!-- /#productDetails -->
+
+      {% include 'reviews' %}
+
   </div><!-- /#main -->
 
   {% if product.related_products.size > 0 %}
@@ -300,6 +297,7 @@ charset="utf-8"></script>
       });
     </script>
   {% endif %}
+</div>
   {% comment %}
   {% if product.similar_products.size > 0 %}
                 <h3 style="text-align: center">Аналогичные товары</h3>
