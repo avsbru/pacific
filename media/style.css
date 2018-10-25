@@ -3,8 +3,12 @@
 html{
   //font-size: 10px;
 }
+body{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 .header{
-
+  background: #ffffff;
 }
 .menu{
   font-family: Roboto;

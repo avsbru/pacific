@@ -96,9 +96,9 @@
                        </a>
      				         </div>
      				            <p class="product-title">
-     					                <a href="{{ product.url }}" title="{{ product.title }}">{{ product.title | escape }}</a>
+     					                <a href="{{ product.url }}" title="{{ product.title }}">{{ product.title | escape | truncate:25 }}</a>
      				            </p>
-     				            <!--p class="product-desc">{{ product.description | strip_html | truncate:60 }}</p-->
+     				            <p class="product-desc">{{ product.description | strip_html | truncate:60 }}</p>
      				            <p class="product-price">Цена: {{ product.price | money }}</p>
      			      </div>
      		     </div>

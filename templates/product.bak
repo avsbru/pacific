@@ -1,0 +1,481 @@
+<script type="text/javascript">
+$(function(){
+    var product = {{product | json}};
+    window.sku = product.variants[0].sku.replace(' ','_');
+
+    window.atlantic_product = new AtlanticProduct({{ product | json }});
+
+  var product_colors_array = [];
+  $.each(window.atlantic_product.colors,function(i, col) {
+            var color_new = col.replace(/\s\[.*?\]/g, "");
+            product_colors_array.push(color_new);
+    });
+
+
+    var images = {};
+    $.each(product.images, function(index, image){
+        var color = get_color(image.url);
+
+        if($.inArray(color, product_colors_array) == -1) return;
+        if (color ) {
+           if ( images[color] == undefined) images[color] = {};
+           $.each(window.atlantic_product.colors,function(i, col) {
+
+            var color_new = col.replace(/\s\[.*?\]/g, "");
+             if (color_new == color) {
+              images[color].variant = col;
+             }
+         });
+
+
+            if ( image.url.match(/_mini\./) ) {
+                images[color].mini = image.url;
+            } else {
+                images[color].origin = image.url;
+            }
+        }
+
+    });
+    var images_html = '';
+    $.each(images, function(color, urls){
+        images_html += '<li id="color_'+color+'"><img alt="' + urls.variant + '" src="' + urls.mini + '"' + (urls.origin ? ' rel="' + urls.origin + '"' : ' ') + '></li>';
+    });
+
+    $('#clearfix').html(images_html);
+
+  var options={
+    position:"right",
+    width:374,
+    height:360,
+    offsetTop:-4,
+    offsetLeft:20,
+    beforeShow:function(obj){$('select').hide(0);},
+    afterShow:function(obj){},
+    beforeHide:function(obj){$('select').show(0);},
+    afterHide:function(obj){}
+  };
+  $(".jqzoom").zoommerMa(options);
+  $(".jqzoom").click(function(){ return false; });
+
+  $("#productPhoto .secondPhoto").not('.imagePhoto').click(function(){
+    var urls=$(this).attr("href");
+    urls=urls.split('#');
+    $('#productPhoto .defaultPhoto img').attr('src',urls[1]);
+    $('#productPhoto .defaultPhoto').attr('href',urls[0]);
+    $("#productPhoto .current").removeClass('current');
+    $(this).addClass('current');
+
+    if($('.jqzoom.defaultPhoto').hasClass('visualPhoto')){
+      $(".jqzoom").zoommerMa(options);
+      $('.jqzoom.defaultPhoto').removeClass('visualPhoto');
+    };
+    return false;
+  });
+
+  $('#productDetails .pdColors ul li').hover(function(){
+    $(this).addClass("hover");
+    var clickedTop=$(this).position().top;
+    var clickedLeft=$(this).position().left;
+    if($($(this).children('img')).attr("src")=='{{ "sc_attribute_default.jpg" | asset_url }}'){
+      $('#colorToolTip img').attr('src','{{ "sc_attribute_default_big.jpg" | asset_url }}');
+    } else $('#colorToolTip img').attr('src',$($(this).children('img')).attr("src"));
+    $('#colorToolTip h5 span').text($($(this).children('img')).attr("alt").replace(/\s\[.*?\]/g, ""));
+    $('.colorToolTipPosition').css({'top':clickedTop-135,'left':clickedLeft+20});
+    $('#colorToolTip').show();
+  },function(){
+    $('#colorToolTip').hide();
+    $(this).removeClass("hover");
+  });
+
+  $('#productDetails .pdColors ul li').click(function(){
+
+    var url = $($(this).children('img')).attr("rel");
+                if ( typeof(url) !== 'undefined' ) {
+                    url = url.replace( /thumb_/ ,'');
+                    url = url.replace( /thumb/ ,'original');
+        $('#productPhoto .defaultPhoto img').attr('src',url);
+        $('#productPhoto .defaultPhoto').attr('href',url);
+        if($('.jqzoom.defaultPhoto').hasClass('visualPhoto')){
+      $(".jqzoom").zoommerMa(options);
+      $('.jqzoom.defaultPhoto').removeClass('visualPhoto');
+        };
+                }
+
+    $("#productDetails .pdColors ul li.current").removeClass('current');
+    $(this).addClass('current');
+
+    var color = $($(this).children('img')).attr("alt");
+
+                window.atlantic_product.updateSizeSelect(color);
+
+    return false;
+  });
+
+  if($(".secondPhotos a").length > 1) $(".secondPhotos").show();
+
+$('#productDetails .pdColors ul li:first').trigger('click');
+/*
+        $('li#color_' + get_color(product.images[0].url)).trigger('click');
+*/
+
+});
+</script>
+
+<!--div class="container" id="product"-->
+  <div class="row" id="product main">
+    <div class="col-md-4 mx-0" id="productPhoto">
+
+      <span class="productPhoto">
+        <a href="{{ product.first_image.original_url }}" class="jqzoom defaultPhoto centerProdImg">
+          <img alt="{{ product.title | escape }}" src="{{ product.first_image.large_url }}" style="opacity: 1;" class="">
+        </a>
+      </span>
+
+      {% assign show_common_photos = false %}
+      {% capture sku %}{{product.variants.first.sku | replace:' ','_' | plus: '.jpg' }}{% endcapture %}
+
+      <div class="secondPhotos clearfix">
+        {% if product.images.size > 1 %}
+          {% for image in product.images %}
+          <!-- выводим только крупные картинки -->
+            {% unless image.url contains 'mini' %}
+              <a class="secondPhoto {% if forloop.first %}current{% endif %} {% if forloop.last %}last{% endif %}" href="{{ image.original_url}}#{{ image.original_url}}" alt="{{ product.title | escape }}" title="{{ image.title | escape }}">
+                <img src="{{ image.thumb_url }}" alt="{{ image.title | escape }}" title="{{ image.title | escape }}"/>
+              </a>
+            {% endunless %}
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="result"></div>
+
+    </div>
+
+    <div class="col-md-5 mx-0" id="productDetails">
+        <h1>{{ product.title | escape }}</h1>
+        <p><strong>Артикул:</strong> {{ product.variants.first.sku }}</p>
+        <p><strong>Производитель:</strong> {{ product.properties.brend.characteristics.first.name }}</p>
+        <p>{{product.description}}</p>
+    </div>
+
+    <div class="col-md-3 mx-0 p-3 bg-light">
+      <form action="{{ cart_url }}" method="post" id="order" class="buy_form" >
+        <h2>{{ product.price | money }}</h2>
+        <p>Доставка курьером по Москве<br><span class="lead">300 руб</span><br>от 3000 руб<br><span class="lead">Бесплатно</span></p>
+
+        <fieldset>
+          <legend>Выбери размер</legend>
+          <div class="pdSettingsSize">
+            <label>Выбери размер:</label>
+              <select class="onChange" name="variant_id" id="variant-select">
+                {% for variant in product.variants %}
+                <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
+                {% endfor %}
+              </select>
+            <a href="#" class="pdSettingsSizeTable" id="pdSettingsSizeTable">Таблица размеров</a>
+          </div>
+        </fieldset>
+
+        {% for variant in product.variants %}
+          <input type="hidden" name="item_variant_quantity_{{ variant.id }}" value="{{ variant.quantity }}"/>
+        {% endfor %}
+
+        <h4>Выбери цвет:</h4>
+        <input type="hidden" value="" name="option[1]" id="chossenColor">
+  <div id="colorToolTip" style="display: none;">
+    <div class="colorToolTipPosition" style="top: -135px; left: 94px;">
+      <div class="colorToolTipFrame">
+        <div class="colorToolTipLoading">
+          <img alt="Посмотрите товар в выбранном цвете" src="{{ '_item-color.jpg' | asset_url }}">
+        </div>
+        <h5>Цвет <span>granatowy</span></h5>
+      </div>
+    </div>
+  </div>
+  <div class="pdColorsWrap">
+          <ul class="clearfix" id="clearfix">
+          </ul>
+  </div>
+
+        <fieldset>
+          <legend>Добавить в корзину</legend>
+          {% if product.available %}
+            <div class="pdSettingsCount">
+              <label for="cartQuantity">Кол-во:</label>
+              {% if product.properties.pack.characteristics.size %}
+                <select id="cartQuantity" name="quantity">
+                  {% assign pack = product.properties.pack.characteristics.first.handle %}
+                  {% for i in (1..10) %}
+                      <option value="{{ pack | to_integer | times: i }}">
+                        {{ pack | to_integer | times: i }}
+                      </option>
+                  {% endfor %}
+                </select>
+                <br clear="all" />В упаковке - {{ pack }} шт.
+              {% else %}
+                <input type="text" id="cartQuantity" name="quantity" class="text" value="1">
+              {% endif %}
+            </div>
+            <input type="image" src="{{ 'inpAddToCart.gif' | asset_url }}" id="add-cart" name="cartSubmit" class="image add_button" value="Добавить в корзину" alt="Добавить в корзину">
+            <div id="quantity-limit-warning" style="display:none;">Извините, на складе недостаточно товара в запрошенном количестве.</div>
+          {% else %}
+            <h6>ВРЕМЕННО НЕДОСТУПНО</h6>
+          {% endif %}
+        </fieldset>
+
+      </form>
+    </div>
+
+  </div>
+<!--/div-->
+
+
+<div class="container my-5" id="product">
+  <div class="row" id="main">
+
+    {% comment %}
+    <div id="productPhoto col-md-3" style="position: relative;">
+
+      <span class="productPhoto">
+        <a href="{{ product.first_image.original_url }}" class="jqzoom defaultPhoto centerProdImg">
+          <img alt="{{ product.title | escape }}" src="{{ product.first_image.large_url }}" style="opacity: 1;" class="">
+        </a>
+      </span>
+
+    {% assign show_common_photos = false %}
+    {% capture sku %}{{product.variants.first.sku | replace:' ','_' | plus: '.jpg' }}{% endcapture %}
+
+    <div class="secondPhotos clearfix">
+        {% if product.images.size > 1 %}
+                {% for image in product.images %}
+                                        <!-- выводим только крупные картинки -->
+                                        {% unless image.url contains 'mini' %}
+                <a class="secondPhoto {% if forloop.first %}current{% endif %} {% if forloop.last %}last{% endif %}" href="{{ image.original_url}}#{{ image.original_url}}" alt="{{ product.title | escape }}" title="{{ image.title | escape }}">
+                      <img src="{{ image.thumb_url }}" alt="{{ image.title | escape }}" title="{{ image.title | escape }}"/>
+                  </a>
+                                       {% endunless %}
+        {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="result"></div>
+
+    </div>
+    {% endcomment %}
+
+    <div id="productDetails" class="col-md-6">
+      <form action="{{ cart_url }}" method="post" id="order" class="buy_form" >
+        <div class="pdHead">
+          <h2>{{ product.title | escape }}</h2>
+          <p>Артикул: <span class="sku">{{ product.variants.first.sku }}</span></p>
+        </div>
+
+        <div class="full-descr">
+          {{product.description}}
+        </div>
+
+        <div class="pdPrice">
+          <div id="presence"></div>
+          <h2 id="price-field">{{ product.price | money }}</h2>
+          {% if product.old_price > 0 %}<h3 class="oldPrice">{{ product.old_price | money }}</h3>{% endif %}
+        </div>
+
+        <div class="pdSettings">
+          {% if product.properties.size > 0 %}
+            <ul id="pdContains">
+                    {% for property in product.properties %}
+
+                      <li {% if property.name contains 'татус' %} style=" display:none; border: 1px solid red;"{% endif %}>
+                        <dl class="clearfix">
+                          <dt>
+                            {% unless property.name contains 'Коллекция' %}{{property.name}}:{%endunless%}
+                          </dt>
+                          <dd>
+                            {% for characteristic in property.characteristics %}
+                            {% unless property.name contains 'Коллекция' %}
+                              {% unless forloop.first %},{% endunless %} {{characteristic.name}}
+                            {% endunless %}
+                            {% endfor %}
+                    </dd></dl></li>
+                    {% endfor%}
+            </ul>
+                {% endif %}
+
+              <div class="pdColors">
+                <h4>Выбери цвет:</h4>
+                <input type="hidden" value="" name="option[1]" id="chossenColor">
+          <div id="colorToolTip" style="display: none;">
+            <div class="colorToolTipPosition" style="top: -135px; left: 94px;">
+              <div class="colorToolTipFrame">
+                <div class="colorToolTipLoading">
+                  <img alt="Посмотрите товар в выбранном цвете" src="{{ '_item-color.jpg' | asset_url }}">
+                </div>
+                <h5>Цвет <span>granatowy</span></h5>
+              </div>
+            </div>
+          </div>
+          <div class="pdColorsWrap">
+                  <ul class="clearfix" id="clearfix">
+                  </ul>
+          </div>
+              </div>
+          {% comment %}
+          <!--
+            <div class="row clearfix" id="changeVariation">
+              <input type="image" src="{{ 'changeVariationSubmit.gif' | asset_url }}" id="changeVariationSubmit" name="changeVariation" class="image" alt="Zmień">
+            </div>
+          -->
+          {% endcomment %}
+          <fieldset>
+            <legend>Выбери размер</legend>
+            <div class="pdSettingsSize">
+              <label>Выбери размер:</label>
+                <select class="onChange" name="variant_id" id="variant-select">
+                  {% for variant in product.variants %}
+                  <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
+                  {% endfor %}
+                </select>
+              <a href="#" class="pdSettingsSizeTable" id="pdSettingsSizeTable">Таблица размеров</a>
+            </div>
+          </fieldset>
+          {% for variant in product.variants %}
+            <input type="hidden" name="item_variant_quantity_{{ variant.id }}" value="{{ variant.quantity }}"/>
+          {% endfor %}
+        </div><!-- //.pdSettings -->
+
+        <fieldset>
+          <legend>Добавить в корзину</legend>
+          {% if product.available %}
+            <div class="pdSettingsCount">
+              <label for="cartQuantity">Кол-во:</label>
+              {% if product.properties.pack.characteristics.size %}
+                <select id="cartQuantity" name="quantity">
+                  {% assign pack = product.properties.pack.characteristics.first.handle %}
+                  {% for i in (1..10) %}
+                      <option value="{{ pack | to_integer | times: i }}">
+                        {{ pack | to_integer | times: i }}
+                      </option>
+                  {% endfor %}
+                </select>
+                <br clear="all" />В упаковке - {{ pack }} шт.
+              {% else %}
+                <input type="text" id="cartQuantity" name="quantity" class="text" value="1">
+              {% endif %}
+            </div>
+            <input type="image" src="{{ 'inpAddToCart.gif' | asset_url }}" id="add-cart" name="cartSubmit" class="image add_button" value="Добавить в корзину" alt="Добавить в корзину">
+            <div id="quantity-limit-warning" style="display:none;">Извините, на складе недостаточно товара в запрошенном количестве.</div>
+          {% else %}
+            <h6>ВРЕМЕННО НЕДОСТУПНО</h6>
+          {% endif %}
+        </fieldset>
+      </form>
+      <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+      <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus"></div>
+
+    </div><!-- /#productDetails -->
+
+      {% include 'reviews' %}
+
+  </div><!-- /#main -->
+
+  {% if product.related_products.size > 0 %}
+                <h3 style="text-align: center">Рекомендуемые товары</h3>
+    <div class="clearfix" id="relatedProducts">
+      <div id="relatedProductsWraper" style="position: relative;">
+        <div id="relatedProductsMovingArea" >
+            {% for product in product.related_products %}{% include 'product_view' %}{% endfor %}
+        </div>
+      </div>
+      <!-- <a id="relatedProductsNext" href="#">Следующий</a> -->
+    </div>
+    <script type="text/javascript">
+      $("#relatedProducts").scrollerMa({
+        mode:"vertical",
+        navType:"button",
+        steps:2,
+        duration:500,
+        itemsPerStep:1,
+        lastFull:true,
+        items:".thumb"
+      });
+    </script>
+  {% endif %}
+</div>
+
+
+  {% comment %}
+  {% if product.similar_products.size > 0 %}
+                <h3 style="text-align: center">Аналогичные товары</h3>
+    <div class="clearfix" id="similarProducts">
+      <div id="relatedProductsWraper" style="position: relative;">
+        <div id="relatedProductsMovingArea" >
+            {% for product in product.similar_products %}{% include 'product_view' %}{% endfor %}
+        </div>
+      </div>
+      <!-- <a id="relatedProductsNext" href="#">Следующий</a> -->
+    </div>
+    <script type="text/javascript">
+      $("#similardProducts").scrollerMa({
+        mode:"vertical",
+        navType:"button",
+        steps:2,
+        duration:500,
+        itemsPerStep:1,
+        lastFull:true,
+        items:".thumb"
+      });
+    </script>
+  {% endif %}
+  {%endcomment%}
+</div>
+<div id="sizeTablesPopUpHidden" style="display:none">
+  <div class="UpContent sizeTablesPopUp">
+    <h2>Таблица размеров</h2>
+    <div class="tabHead">
+      <ul class="clearfix">
+        {% for block in block_lists.sizes.blocks %}
+          <li><a href="#tabs-{{ forloop.index }}">{{block.title}}</a></li>
+        {% endfor %}
+      </ul>
+      {% for block in block_lists.sizes.blocks %}
+        <div id="tabs-{{ forloop.index }}">{{block.content}}</div>
+      {% endfor %}
+    </div>
+    <div class="tabBody">
+    </div>
+    <a href="#" class="closeBtn">Закрыть</a>
+  </div>
+</div>
+<script>
+    $(function() {
+/*        window.atlantic_product = new AtlanticProduct({{ product | json }});
+*/
+        $('span.avaiableProductColor img').each(function(index) {
+            var color = get_color($(this).attr('src'),{sku:$(this).attr('data-sku')});
+          console.log(color);
+            $(this).attr('alt', color);
+            $(this).attr('title', color);
+        });
+
+    if($('#pdSettingsSizeTable').length!=0)$('#pdSettingsSizeTable').lightboxMa({
+      mode:'custom',
+      autoShow:false,
+      close:'.closeBtn',
+      afterInit:function(ref,callback){
+        $('#lbMa_pdSettingsSizeTable .tabHead').tabs().tabs('select',0);
+        //$('.UpContent .tabHead').tabs();
+        callback(ref);
+      },
+      afterShow: function(ref){
+        $('select').hide();
+      },
+      beforeHide:function(ref,callback){
+        $('select').show();
+        callback(ref);
+      },
+      content: '<div class="UpContent sizeTablesPopUp"><h2>Таблица размеров</h2><div class="tabHead"><ul class="clearfix"><li><a class="tabWomenTable" href="#womenTable">Таблица женских размеров</a></li><li><a class="tabMenTable" href="#menTable">Таблица мужских размеров</a></li><li><a class="tabBraTable" href="#braTable">Таблица размеров бюстгалтеров</a></li><li><a class="tabSwimTable" href="#swimTable">Таблица размеров купальников</a></li></ul></div><div class="tabBody"><img id="womenTable" src="{{ 'womanbw.jpg' | asset_url }}" alt="Таблица женских размеров"><img id="menTable" src="{{ 'manbw.jpg' | asset_url }}" alt="Таблица мужских размеров"><img id="braTable" src="{{ 'bustbw.jpg' | asset_url }}" alt="Таблица размеров бюстгалтеров"><img id="swimTable" src="{{ 'swimbw.jpg' | asset_url }}" alt="Таблица размеров купальников"></div><a href="#" class="closeBtn">Закрыть</a></div>'
+    });
+/*
+                $('#color_' + get_color(product.images[0].url)).trigger('click');
+*/
+    });
+</script>

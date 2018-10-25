@@ -84,7 +84,7 @@
 
 <body>
 
-  <section class="container header d-none d-md-block">
+  <header class="container sticky-top d-none d-md-block header">
         <ul class="row list-unstyled m-0 p-0">
           <li class="col-12 col-md-4 pl-0 d-flex align-items-center">
             <!-- Begin Menu -->
@@ -121,7 +121,7 @@
             </div>
           </li>
         </ul>
-    </section>
+    </header>
 
     <section class="container d-block d-md-none">
       <div class="row">
@@ -131,9 +131,11 @@
       </div>
     </section>
 
-  {{ content_for_layout }}
-
-    <section class="container footer">
+    <main class="container">
+      {{ content_for_layout }}
+    </main>
+    
+    <footer class="container footer">
       <div class="row">
         <div class="col-md-4">
           <h3>{{ linklists.spravka.title}}</h3>
@@ -160,7 +162,7 @@
           </ul>
         </div>
       </div>
-    </section>
+    </footer>
     <!-- Themes Scripts -->
     {% comment %}
     <script type="text/javascript" src="{{ 'jquery.nivo.slider.pack.js' | asset_url }}"></script>
