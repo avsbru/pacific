@@ -14,11 +14,38 @@
     <div class="col-md-8 catalog-list">
       <h1>{{ collection.title }}</h1>
       <div class="row">
-        {% if products.size == 0 %}
-          <p>В категории нет товаров</p>
-        {% endif %}
+
+
         {% if products.size > 0 %}
-          {% paginate products by 15 %}
+
+        {% paginate products by 15 %}
+
+        {% if paginate.pages > 1 %}
+        <div class="container">
+            <ul class="pagination">
+              {% if paginate.previous %}
+              <li class="page-item"><a href="{{paginate.previous.url}}"class="page-link">&laquo;</a></li>
+              {% endif %}
+                  {% for part in paginate.parts %}
+                  {% if paginate.current_page == part.title %}
+                  <li class="page-item active">
+                  {% else %}
+                    <li class="page-item">
+                  {% endif %}
+                        {% if part.is_link %}
+                        <a href="{{part.url}}" class="page-link">{{part.title}}</a>
+                            <!--{{ part.title | link_to: part.url }}-->
+                        {% else %}
+                            <a class="page-link">{{part.title}}</a>
+                        {% endif %}
+                      </li>
+                  {% endfor %}
+                  {% if paginate.next %}
+                <li class="page-item"><a href="{{paginate.next.url}}" class="page-link">&raquo;</a></li>
+              {% endif %}
+              </ul>
+        </div>
+        {% endif %}
 
           {% comment %}
           <div class="paginationList clearfix order-form">
@@ -104,6 +131,10 @@
      		     </div>
            {% endfor %}
            {% endpaginate %}
+         {% endif %}
+
+         {% if products.size == 0 %}
+           <p>В категории нет товаров</p>
          {% endif %}
       </div>
  	</div>
