@@ -1,23 +1,12 @@
 $.ajaxSetup({cache: true});
 
   $(function(){
-  korz = new InSales.Cart();
-/*
-  Events( 'onCart_Update' ).subscribe( function( $data ){
-    console.log( 'onCart_Update',$data );
-  })
-  */
 
-  $('#korzinaBriefQuant').text(korz.items_count)
-  $('#korzinaBriefSumm').text(korz.items_price)
   $('.korzina a').mouseover(function(){
     $('.korzina-brief').show();
   }).mouseout(function(){
     $('.korzina-brief').hide();
   })
-
-    //alert(Cart.items_count);
-    //alert(Cart.items_price);
   })
 
 
@@ -27,16 +16,22 @@ jQuery(function() {
         if($(this).children("li").length == 0) $(this).hide();
     });
 
+
     initCart();
     var updateCart = function(response) {
         if( response.items_count > 0){
-            $("#cartData").load("/ #cartData");
 
-            $('#emptyBin').hide();
-            $('#cartS, #cartWrapme').show();
+            //$("#cartData").load("/ #cartData");
 
-            $(".parse_total_price").html(InSales.formatMoney(response.total_price, money_with_currency_format));
-            $(".parse_total_count").html(response.items_count);
+            //$('#emptyBin').hide();
+            //$('#cartS, #cartWrapme').show();
+
+            //$(".parse_total_price").html(InSales.formatMoney(response.total_price, money_with_currency_format));
+            //$(".parse_total_count").html(response.items_count);
+
+            $('#korzinaBriefQuant').text(response.items_count)
+            $('#korzinaBriefSumm').text(response.total_price)
+            //$('#korzinaBriefSumm').text(InSales.formatMoney(response.total_price, money_with_currency_format))
 
             var text = 'Товар&nbsp;добавлен&nbsp;в&nbsp;корзину';
             set_preloaders_message('<div id="add_product_notification">'+text+'</div>');

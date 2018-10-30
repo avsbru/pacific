@@ -115,8 +115,8 @@
             <div class="korzina">
               <a href="/cart_items"><i class="fa fa-fw f-lg fa-shopping-bag"></i></a>
               <div class="korzina-brief">
-                В&nbsp;корзине&nbsp;<span id="korzinaBriefQuant"></span>&nbsp;товаров<br>
-                на&nbsp;сумму&nbsp;<span id="korzinaBriefSumm"></span>&nbsp;₽
+                В&nbsp;корзине&nbsp;<span id="korzinaBriefQuant">{{cart.items_count}}</span>&nbsp;товаров<br>
+                на&nbsp;сумму&nbsp;<span id="korzinaBriefSumm">{{cart.total_price}}</span>&nbsp;₽
               </div>
             </div>
           </li>
@@ -134,7 +134,7 @@
     <main class="container">
       {{ content_for_layout }}
     </main>
-    
+
     <footer class="container footer">
       <div class="row">
         <div class="col-md-4">
