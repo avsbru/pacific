@@ -153,7 +153,8 @@ $('#productDetails .pdColors ul li:first').trigger('click');
     <div class="col-md-5 mx-0" id="productDetails">
         <h1>{{ product.title | escape }}</h1>
         <p><strong>Артикул:</strong> {{ product.variants.first.sku }}</p>
-        <p><strong>Производитель:</strong> {{ product.properties.brend.characteristics.first.name }}</p>
+        <p><strong>Состав:</strong> {{ product.properties.sostav.characteristics.first.name}}</p>
+        <p><strong>Бренд:</strong> {{ product.properties.brend.characteristics.first.name }}</p>
         <p>{{product.description}}</p>
     </div>
 
@@ -227,6 +228,7 @@ $('#productDetails .pdColors ul li:first').trigger('click');
 
   </div>
 
+<!--
   <div class="row">
     <div class="col-md-12">
 
@@ -254,4 +256,5 @@ $('#productDetails .pdColors ul li:first').trigger('click');
 
     </div>
   </div>
+-->
 <!--/div-->
