@@ -122,7 +122,7 @@ $('#productDetails .pdColors ul li:first').trigger('click');
 </script>
 
 <!--div class="container" id="product"-->
-  <div class="row" id="product main">
+  <div class="row product-card mb-5" id="product main">
     <div class="col-md-4 mx-0" id="productPhoto">
 
       <span class="productPhoto">
@@ -151,28 +151,28 @@ $('#productDetails .pdColors ul li:first').trigger('click');
     </div>
 
     <div class="col-md-5 mx-0" id="productDetails">
-        <h1>{{ product.title | escape }}</h1>
-        <p><strong>Артикул:</strong> {{ product.variants.first.sku }}</p>
-        <p><strong>Состав:</strong> {{ product.properties.sostav.characteristics.first.name}}</p>
-        <p><strong>Бренд:</strong> {{ product.properties.brend.characteristics.first.name }}</p>
-        <p>{{product.description}}</p>
+        <h1 class="mb-5">{{ product.title | escape }}</h1>
+        <p><strong>Артикул:</strong> <span>{{ product.variants.first.sku }}</span></p>
+        <p><strong>Состав:</strong> <span>{{ product.properties.sostav.characteristics.first.name}}</span></p>
+        <p><strong>Бренд:</strong> <span>{{ product.properties.brend.characteristics.first.name }}</span></p>
+        <p class="mb-5">{{product.description}}</p>
     </div>
 
-    <div class="col-md-3 mx-0 p-3 bg-light">
+    <div class="col-md-3 mx-0 py-3 px-4 product-incart">
       <form action="{{ cart_url }}" method="post" id="order" class="buy_form" >
-        <h2>{{ product.price | money }}</h2>
-        <p>Доставка курьером по Москве<br><span class="lead">300 руб</span><br>от 3000 руб<br><span class="lead">Бесплатно</span></p>
-
+        <h2 class="mb-4">{{ product.price | money }}</h2>
+        <p class="product-incart-dost">Доставка курьером по Москве<br><strong>300 руб</strong><br>от 3000 руб - <strong>Бесплатно</strong></p>
+        <p>Подробнее о <a href="#">способах доставки</a> и <a href="#">способах оплаты</a></p>
         <fieldset>
-          <legend>Выбери размер</legend>
+          <legend>Размер</legend>
           <div class="pdSettingsSize">
-            <label>Выбери размер:</label>
+            <!--label>Размер</label-->
               <select class="onChange" name="variant_id" id="variant-select">
                 {% for variant in product.variants %}
                 <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
                 {% endfor %}
-              </select><br>
-            <a href="#" class="pdSettingsSizeTable" id="pdSettingsSizeTable">Таблица размеров</a>
+              </select>
+            <p><a href="#" class="pdSettingsSizeTable" id="pdSettingsSizeTable">Таблица размеров</a></p>
           </div>
         </fieldset>
 
@@ -180,6 +180,7 @@ $('#productDetails .pdColors ul li:first').trigger('click');
           <input type="hidden" name="item_variant_quantity_{{ variant.id }}" value="{{ variant.quantity }}"/>
         {% endfor %}
 
+        <!--
         <h4>Выбери цвет:</h4>
         <input type="hidden" value="" name="option[1]" id="chossenColor">
   <div id="colorToolTip" style="display: none;">
@@ -196,12 +197,13 @@ $('#productDetails .pdColors ul li:first').trigger('click');
           <ul class="clearfix" id="clearfix">
           </ul>
   </div>
+-->
 
         <fieldset>
-          <legend>Добавить в корзину</legend>
+          <legend>Количество</legend>
           {% if product.available %}
             <div class="pdSettingsCount">
-              <label for="cartQuantity">Кол-во:</label>
+              <!--label for="cartQuantity">Кол-во:</label-->
               {% if product.properties.pack.characteristics.size %}
                 <select id="cartQuantity" name="quantity">
                   {% assign pack = product.properties.pack.characteristics.first.handle %}
@@ -213,10 +215,12 @@ $('#productDetails .pdColors ul li:first').trigger('click');
                 </select>
                 <br clear="all" />В упаковке - {{ pack }} шт.
               {% else %}
-                <input type="text" id="cartQuantity" name="quantity" class="text" value="1">
+                <input type="text" class="cartQuantity" id="cartQuantity" name="quantity" class="text" value="1">
               {% endif %}
             </div>
-            <input type="image" src="{{ 'inpAddToCart.gif' | asset_url }}" id="add-cart" name="cartSubmit" class="image add_button" value="Добавить в корзину" alt="Добавить в корзину">
+            <div class="text-center mt-4">
+              <input type="button" id="add-cart" name="cartSubmit" class="image add_button btn btn-dark" value="Добавить в корзину" />
+            </div>
             <div id="quantity-limit-warning" style="display:none;">Извините, на складе недостаточно товара в запрошенном количестве.</div>
           {% else %}
             <h6>ВРЕМЕННО НЕДОСТУПНО</h6>
@@ -228,6 +232,17 @@ $('#productDetails .pdColors ul li:first').trigger('click');
 
   </div>
 
+
+  {% if product.related_products.size > 0 %}
+      <table>
+            {% tablerow product in product.related_products cols: 4 limit: 4 %}
+                  <a href="{{ product.url }}"><img src="{{ product.first_image.thumb_url }}" /></a>
+                  <a href="{{ product.url }}">{{ product.sale_price | money }}</a>
+                  <a href="{{ product.url }}">{{ product.title | escape }}</a><br />
+                  {{ product.short_description }}
+          {% endtablerow %}
+      </table>
+  {% endif %}
 <!--
   <div class="row">
     <div class="col-md-12">

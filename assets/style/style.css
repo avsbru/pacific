@@ -9,6 +9,7 @@ body{
 }
 .header{
   background: #ffffff;
+  /*border-bottom: 3px #000 solid;*/
 }
 .menu{
   font-family: Roboto;
@@ -38,7 +39,7 @@ text-align: left;
   background: #ffffff;
   z-index: 100;
   top: 100%;
-  border: 1px #d5d5d5 solid;
+  border: 1px rgb(237, 239, 239) solid;
   padding: 2rem 0;
 }
 .menu ul li{
@@ -46,7 +47,7 @@ text-align: left;
   padding: 0 2rem;
 }
 .menu ul li:hover{
-  background: #a7aeb1;
+  background: rgb(237, 239, 239);
 }
 .menu ul li > a:hover{
   text-decoration: none;
@@ -209,4 +210,140 @@ text-align: right;
 }
 .footer ul li > a{
   color: #000000;
+}
+
+
+.catalog-menu{
+  border: 1px rgb(237, 239, 239) solid;
+}
+.catalog-menu > li{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 0.875rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 2.143; /* Приближение из-за подстановки шрифтов */
+}
+.catalog-menu > li:hover{
+  background: rgb(237, 239, 239);
+}
+.catalog-menu > li > a{
+  display: block;
+  color: #000000;
+}
+.catalog-menu > li > a:hover{
+  text-decoration: none;
+}
+.page-link{
+  color: #000000;
+}
+.page-item{
+  margin: 0 0.1rem;
+}
+.page-item:first-child .page-link, .page-item:last-child .page-link{
+  border-radius: 0;
+}
+.page-item.active .page-link{
+  background-color: #dee2e6;
+  border: 1px solid #dee2e6;
+  color: #000;
+}
+.product-title{
+  /*min-height: 3rem;*/
+  font-family: Roboto;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.3;/* Приближение из-за подстановки шрифтов */
+  padding: 0.5rem 2rem 0;
+  text-transform: uppercase;
+  margin: 0;
+}
+.product-title > a{
+  color: #000000;
+}
+.product-price{
+  padding: 0.5rem 2rem 0;
+  font-family: Roboto;
+  color: #000000;
+  font-size: 1.5rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.5;/* Приближение из-за подстановки шрифтов */
+}
+
+
+.product-card{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.714;/* Приближение из-за подстановки шрифтов */
+}
+.product-card h1{
+  font-family: Open Sans;
+  color: #000000;
+  font-size: 1.5rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 600;
+  line-height: 1;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.product-card span{
+  font-family: Roboto;
+  color: #a7aeb1;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.714;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.product-incart{
+  border: 1px rgb(229, 229, 229) solid;
+}
+.product-incart h2{
+  font-family: Roboto;
+  color:#000000;
+  font-size: 1.5rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.25;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.product-incart legend{
+  font-family: Roboto;
+  color:#000000;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.286;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+  text-transform: uppercase;
+}
+.product-incart a{
+  color: #000000;
+  text-decoration: underline;
+}
+.product-incart-dost{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+}
+.onChange{
+  border: 1px #a7aeb1 solid;
+  padding: 0.5rem;
+  font-family: Open Sans;
+  color: #a7aeb1;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 600;
+  line-height: 1.714;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.onChange option{
+  color: rgb(167, 174, 177);
+}
+.cartQuantity{
+  border: 1px #a7aeb1 solid;
+  width: 5rem;
+  padding: 0.3rem;
+  text-align: center;
+  color: #a7aeb1;
+  font-family: Open Sans;
+  font-size: 1rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 600;
+  line-height: 1.714;/* Приближение из-за подстановки шрифтов */
 }
