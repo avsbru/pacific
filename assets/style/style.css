@@ -347,3 +347,139 @@ text-align: right;
   font-weight: 600;
   line-height: 1.714;/* Приближение из-за подстановки шрифтов */
 }
+.img-fixheight{
+  height: 310px;
+  object-fit: cover;
+}
+.related-products-link{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.1;/* Приближение из-за подстановки шрифтов */
+}
+.sku-price{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 1.5rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.5;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+#add_product_notification{
+  background: rgb(229, 230, 229);
+  padding: 2rem;
+}
+.cartOrder h1{
+  font-family: 'Open Sans';
+  color: #000000;
+  font-size: 1.5rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 600;
+  line-height: 1; /* Приближение из-за подстановки шрифтов */
+}
+.cartOrder h2{
+  font-family: 'Roboto';
+  color: #000000;
+  font-size: 0.875rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 700;
+  line-height: 2.143; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.cartOrder p{
+  font-family: 'Roboto';
+  color: #000000;
+  font-size: 0.875rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 2.143; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+#cartTable{
+  border: 1px rgb(211, 211, 211) solid;
+}
+#cartTable thead{
+  background: rgb(237, 239, 239);
+}
+#cartTable thead th{
+  font-family: 'Roboto';
+  color: #000000;
+  font-size: 0.875rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 2.143; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.itemName{
+  display: block;
+  font-family: 'Open Sans';
+  color: #000000;
+  font-size: 1.125rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 600;
+  line-height: 1.333;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.itemsProp{
+  font-family: 'Roboto';
+  color: #a7aeb1;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.714;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+  text-transform: uppercase;
+}
+.itemsProp strong{
+  color: #000000;
+}
+.cartCol{
+  font-family: 'Open Sans';
+  color: #a7aeb1;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 600;
+  line-height: 1.714;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+  max-width: 3rem;
+  border: 1px rgb(229, 229, 229) solid;
+}
+.ctPrice{
+  font-family: 'Roboto';
+  color: #000000;
+  font-size: 1.125rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.667; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.ctOverall{
+  font-family: 'Roboto';
+  color: #000000;
+  font-size: 1.5rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.25; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.couponRow{
+  background: rgb(237, 239, 239);
+  font-family: Roboto;
+  color: #000000;
+  font-size: 0.875rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 2.143; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.coupon_message{
+  line-height: 1 !important;
+  color: #ff0000 !important;
+}
+.cartSumma{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 1.5rem; /* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 1.25; /* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}
+.cartSummary{
+  font-family: Roboto;
+  color: #000000;
+  font-size: 0.875rem;/* Приближение из-за подстановки шрифтов */
+  font-weight: 400;
+  line-height: 2.143;/* Приближение из-за подстановки шрифтов */
+  text-align: left;
+}

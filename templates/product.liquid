@@ -232,7 +232,56 @@ $('#productDetails .pdColors ul li:first').trigger('click');
 
   </div>
 
+  {% if product.related_products.size > 0 %}
+  <section class="container mb-5 novinki">
+    <h2 class="mb-4">С этим товаром выбирают:</h2>
+    <div id="carousel-n" class="carousel slide" data-ride="false">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="row px-5">
+          {% for  product in product.related_products limit:4 %}
+          <div class="col-md-3 col-12">
+            <a href="{{product_url}}"><img class="img-fluid w-100 img-fixheight" src="{{ product.first_image.large_url }}" alt="{{ product.title | escape }}"></a>
+            <div class="carousel-caption infoblock2">
+              <h4 class="mt-0 my-2"><a class="related-products-link" href="{{product_url}}">{{ product.title | escape }}</a></h4>
+              <p class="sku-price">{{ product.sale_price | money }}</p>
+            </div>
+          </div>
+          {% endfor %}
+       </div>
+      </div>
 
+      {% if product.related_products.size > 4 %}
+      <div class="carousel-item">
+        <div class="row px-5">
+          {% for  product in product.related_products offset:4 %}
+          <div class="col-md-3 col-12">
+            <a href="{{product_url}}"><img class="img-fluid w-100 img-fixheight" src="{{ product.first_image.large_url }}" alt="{{ product.title | escape }}"></a>
+            <div class="carousel-caption infoblock2">
+              <h4 class="mt-0 my-2"><a class="related-products-link" href="{{product_url}}">{{ product.title | escape }}</a></h4>
+              <p class="sku-price">{{ product.sale_price | money }}</p>
+            </div>
+          </div>
+          {% endfor %}
+       </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Элементы управления -->
+    <a class="carousel-control-prev" href="#carousel-n" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Предыдущий</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-n" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Следующий</span>
+    </a>
+
+  </div>
+  </section>
+  {% endif %}
+  {% comment %}
   {% if product.related_products.size > 0 %}
       <table>
             {% tablerow product in product.related_products cols: 4 limit: 4 %}
@@ -243,6 +292,7 @@ $('#productDetails .pdColors ul li:first').trigger('click');
           {% endtablerow %}
       </table>
   {% endif %}
+  {% endcomment %}
 <!--
   <div class="row">
     <div class="col-md-12">

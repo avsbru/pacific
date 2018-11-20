@@ -57,177 +57,203 @@
   })
 </script>
 
-<div id="basket" class="container my-5">
-  <h2>Оформление заказа</h2>
-  <p><strong>Уважаемый покупатель</strong><br>
-  Перед тем, как оформить заказ, просим Вас ознакомиться с условиями <a href="/page/delivery_and_payment">оплаты и доставки</a>, а также с правилами <a href="/page/%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F-%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%82%D0%B0-%D0%B8-%D0%BE%D0%B1%D0%BC%D0%B5%D0%BD%D0%B0-%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D0%BE%D0%B2">возврата товара</a></p>
-  {% if cart.items != empty %}
-  <form action="/cart_items" id="cartform" method="post">
-    <input type="hidden" name="lang" value="{{ language.locale }}">
-    <input type="hidden" value="put" name="_method">
+<section class="container my-5">
+  <div class="row">
+    <div class="col-md-3 pl-0">
+      <ul class="list-unstyled catalog-menu py-4 px-0">
+        <li class="px-4 mx-0"><a href="#">Доставка и получение</a></li>
+        <li class="px-4 mx-0"><a href="#">Обмен и возврат</a></li>
+        <li class="px-4 mx-0"><a href="#">Оплата</a></li>
+      </ul>
+    </div>
+    <div id="basket" class="col-md-9 cartOrder">
+      <h1>Оформление заказа</h1>
+      <h2>Уважаемый покупатель!</h2>
+      <p>Перед тем, как оформить заказ, просим Вас ознакомиться с условиями оплаты и доставки, а также с правилами возврата товара</p>
 
-    <table id="cartTable">
-      <thead>
-        <tr>
-          <th colspan="2">Товары</th>
-          <th class="ctQuant">Количество</th>
-          <th class="ctPrice">Цена за единицу</th>
-          <th class="ctOverall">Цена за количество</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in cart.items %}
-          <tr valign="top">
-            <td class="ctImage">
-              <div class="thumbSmall">
-                <a class="picture" title="{{ item.product.title | escape }}" href="{{ item.product.url }}">
+      {% if cart.items != empty %}
+      <form action="/cart_items" id="cartform" method="post">
+        <input type="hidden" name="lang" value="{{ language.locale }}">
+        <input type="hidden" value="put" name="_method">
 
-{% assign color = '' %}
-{{ color }}
-{% assign image_url = item.product.first_image.thumb_url %}
-{% for option_value in item.variant.option_values %}
-  {% if option_value.option_name.title == 'Цвет' %}
-      {% capture color %}{{ option_value.title | replace: ' ', '_' }}.{% endcapture %}
-      {% for image in item.product.images %}
-        {% if image.url contains color %}
-          {% assign image_url = image.thumb_url %}
-        {% endif%}
-      {% endfor%}
+        <table id="cartTable" class="table">
+          <thead>
+            <tr>
+              <th scope="col" colspan="2">Товары</th>
+              <th scope="col" class="ctQuant">Кол&nbsp;&dash;&nbsp;во</th>
+              <th scope="col" class="ctPrice">Цена&nbsp;за&nbsp;единицу</th>
+              <th scope="col" class="ctOverall">Итого</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart.items %}
+              <tr valign="top">
+                <td class="ctImage">
+                  <div class="thumbSmall">
+                    <a class="picture" title="{{ item.product.title | escape }}" href="{{ item.product.url }}">
 
-  {% endif %}
-{% endfor %}
-<img src="{{ image_url }}" title="{{ item.product.title | escape }}" alt="{{ item.product.title | escape }}" />
-                </a>
-              </div>
-            </td>
-
-            <td class="ctDesc">
-              <h4><a href="{{ item.product.url }}">{{ item.title | escape }}</a></h4>
-              <h6>&nbsp;</h6>
-              <ul class="ctDescAttributes">
-{% assign color = '_mini' %}
-{% for option_value in item.variant.option_values %}
-  {% if option_value.option_name.title == 'Цвет' %}
-                {% if option_value.title contains '[' %}
-                {% capture color %}{{ option_value.title | split:'[' | first | replace: ' ', '_' }}mini{% endcapture %}
-                {% else %}
-                {% capture color %}{{ option_value.title | replace: ' ', '_' }}_mini{% endcapture %}
-                {% endif %}
-
-
-        <li class="ctDescColor">
-
+    {% comment %}
+    {% assign color = '' %}
+    {{ color }}
+    {% assign image_url = item.product.first_image.thumb_url %}
+    {% for option_value in item.variant.option_values %}
+      {% if option_value.option_name.title == 'Цвет' %}
+          {% capture color %}{{ option_value.title | replace: ' ', '_' }}.{% endcapture %}
           {% for image in item.product.images %}
-            {% if image.small_url contains color %}
-              <img src="{{ image.small_url }}" alt="{{ option_value.title }}" title="{{ option_value.title }}">
-            {% endif %}
-          {% endfor %}
-        </li>
-  {% endif %}
-{% endfor %}
-                {%for option in item.product.options %}
-                  {% if option.title contains "Размер" %}
-                    {% for value in option.values %}
-                      {% capture check_value %}({{ value }} /{% endcapture %}
-                      {% if item.title contains check_value %}
-                        <li>{{ value }}</li>
-                      {% endif %}
-                    {% endfor %}
-                  {% endif %}
-                {% endfor %}
-              </ul>
-              <ul class="list-unstyled ctDescOptions">
-                <li><a id="delete_{{ item.id }}" href="{{ item.url }}">удалить</a></li>
-              </ul>
-            </td>
-            <td class="ctQuant">
-              {% if item.product.properties.pack.characteristics.size %}
-                 {% capture pack %}{{item.product.properties.pack.characteristics.first.handle}}{% endcapture %}
-                 {% capture item_tmp %}{{ item.quantity }}{% endcapture %}
-                 <select name="pack_quantity[{{ item.id }}]" iid="{{ item.id }}" class="select">
-                 {% for i in (1..10) %}
-                  {% capture pack_tmp %}{{ pack | to_integer | times: i }}{% endcapture %}
-                     <option value="{{ pack_tmp }}"
-                      {% if pack_tmp == item_tmp %}selected{% endif %}
-                     >
-                      {{ pack_tmp }}
-                     </option>
-                 {% endfor %}
-                </select>
-                <input type="hidden" value="{{ item.quantity }}" iid="{{ item.id }}" name="cart[quantity][{{ item.id }}]">
-              {% else %}
-                <input type="text" value="{{ item.quantity }}" name="cart[quantity][{{ item.id }}]" class="text" maxlength="3">
-              {% endif %}
-              <input type="hidden" value="{{ item.variant.quantity }}" iid="{{ item.id }}" class="item_variant_quantity" name="item_variant_quantity_{{ item.id }}">
-              <div class="quantity-limit-warning" style="display:none;">Извините, на складе недостаточно товара в запрошенном количестве.</div>
-              <a href="#" class="recalc" style="display:none">Пересчитать</a>
-            </td>
-            <td class="ctPrice"><span class="new">{{ item.sale_price | money }}</span></td>
-            <td class="ctOverall"><span class="new">{{ item.total_price | money }}</span></td>
-          </tr>
-        {% endfor %}
+            {% if image.url contains color %}
+              {% assign image_url = image.thumb_url %}
+            {% endif%}
+          {% endfor%}
 
-        <!-- Купон -->
-        {% if cart.enable_coupon? %}
-          <tr>
-            <td class="coupon a-right" colspan="5">
-                {% if cart.invalid_coupon? %}
-                    <p class="coupon_message"><strong>Уважаемый покупатель! Вами был введен промо-код, который, либо не существует, либо не может быть применен к данной группе товаров или в настоящее время.</strong></p>
-                {% endif %}
-              <p class="coupon_field">
-                  {{blocks.coupon.content}}
-                <input type="text" class="text" value="{{ cart.coupon }}" name="cart[coupon]" id="coupon_text" style="margin-left: 10px;"/>
-            <input type="submit" class="btnCoupon recalculate" value="Применить купон" />
-              </p>
-            </td>
-          </tr>
-          {% include 'coupon' %}
-        {% endif %}
-        <!-- // Купон -->
-      </tbody>
-    </table>
-
-    <div class="cartSummary clearfix">
-      <div class="left">
-        <h3>Выгодные предложения от нашего интернет-магазина</h3>
-        <p><strong>Бесплатная доставка по всей России при заказе от 3000 рублей!</strong></p>
-
-        <p><strong><em>Кликни по промокоду и нажми "Применить купон"!</em></strong></p>
-        <!--p><span class="promolink">embajador</span> Только в октябре! Скидка - 25% на весь ассортимент Embajador</p-->
-        <p><span class="promolink">time</span> В выходные дни с 12.00 до 16.00 скидка -20% на все товары, кроме новой коллекции, уцененных товаров и товаров,участвующих в других акциях</p>
-        <p>Подпишись на <a href="/page/podpiska-na-novosti">нашу рассылку</a> и получи подарок!</p>
-        <p>Подпишись на нас в <a href="https://instagram.com/atlanticrussia">Instagram</a> и получи подарок!</p>
-        <p>Вступай в нашу группу <a href="http://vk.com/club27559949">Vkontakte</a> и получи подарок!</p>
-        <!--{{blocks.cartblock.content}}-->
-      </div>
-      <div class="right">
-    <!-- Скидки -->
-    <p class="discounts" style="{% if cart.discounts %}display:block;{%else%}display:none;{% endif %}">
-       {% for discount in cart.discounts %}
-          <strong>{{ discount.description }}:</strong> <span class="big">{{ discount.amount | money }}</span><br clear="all" />
-        {% endfor %}
-    </p>
-
-    <!-- // Скидки -->
-        <dl class="cartSum clearfix">
-          <dt>К оплате:</dt>
-          <dd>{{ cart.items_price | money }}</dd>
-        </dl>
-      </div>
-    </div>
-    <div class="fieldCheckNext clearfix">
-      <a class="btnBackToShop" href="/">Вернуться в магазин</a>
-       <input id="create_order" type="submit" class="submit btnGoToCash" value="Оформить заказ" name="make_order">
-      {% comment %}
-      {% if cart.items_price > 1500 %}
-        <input id="create_order" type="submit" class="submit btnGoToCash" value="Оформить заказ" name="make_order">
-      {% else %}
-        <span style="float:right; font-size:1.5em; text-align:right;">Извините, минимальная сумма заказа &mdash; <strong>1500 рублей</strong>.<br /> Добавьте в корзину еще несколько товаров.</span>
       {% endif %}
-       {% endcomment %}
+    {% endfor %}
+    {% endcomment %}
+
+
+                      <img src="{{ item.product.first_image.thumb_url }}" title="{{ item.product.title | escape }}" alt="{{ item.product.title | escape }}" />
+                    </a>
+                  </div>
+                </td>
+
+                <td class="ctDesc">
+                  <a class="itemName" href="{{ item.product.url }}">{{ item.title | escape }}</a>
+                  <ul class="list-unstyled itemsProp">
+                    {% for property in item.product.properties %}
+                    <li>
+                    <strong>{{property.name}}:</strong>
+                    {%for itempr in property.characteristics%}{{itempr.name}}{% unless forloop.last %},{% endunless %}
+                    </li>
+                    {%endfor%}
+                    {% endfor %}
+                  </ul>
+                  <ul class="list-unstyled ctDescOptions">
+                    <li><a id="delete_{{ item.id }}" href="{{ item.url }}">удалить</a></li>
+                  </ul>
+                </td>
+                <td class="ctQuant">
+                  {% if item.product.properties.pack.characteristics.size %}
+                     {% capture pack %}{{item.product.properties.pack.characteristics.first.handle}}{% endcapture %}
+                     {% capture item_tmp %}{{ item.quantity }}{% endcapture %}
+                     <select name="pack_quantity[{{ item.id }}]" iid="{{ item.id }}" class="select">
+                     {% for i in (1..10) %}
+                      {% capture pack_tmp %}{{ pack | to_integer | times: i }}{% endcapture %}
+                         <option value="{{ pack_tmp }}"
+                          {% if pack_tmp == item_tmp %}selected{% endif %}
+                         >
+                          {{ pack_tmp }}
+                         </option>
+                     {% endfor %}
+                    </select>
+                    <input type="hidden" value="{{ item.quantity }}" iid="{{ item.id }}" name="cart[quantity][{{ item.id }}]">
+                  {% else %}
+                    <input type="text" value="{{ item.quantity }}" name="cart[quantity][{{ item.id }}]" class="text cartCol" maxlength="3" size="2">
+                  {% endif %}
+                  <input type="hidden" value="{{ item.variant.quantity }}" iid="{{ item.id }}" class="item_variant_quantity" name="item_variant_quantity_{{ item.id }}">
+                  <div class="quantity-limit-warning" style="display:none;">Извините, на складе недостаточно товара в запрошенном количестве.</div>
+                  <a href="#" class="recalc" style="display:none">Пересчитать</a>
+                </td>
+                <td class="ctPrice"><span class="new">{{ item.sale_price | money | replace: ' ','&nbsp;' }}</span></td>
+                <td class="ctOverall"><span class="new">{{ item.total_price | money | replace: ' ','&nbsp;' }}</span></td>
+              </tr>
+            {% endfor %}
+
+          <tr class="couponRow">
+            <td colspan="4">
+              {% if cart.invalid_coupon? %}
+                  <p class="coupon_message">Уважаемый покупатель! Вами был введен промо-код, который, либо не существует, либо не может быть применен к данной группе товаров или в настоящее время.</p>
+              {% endif %}
+              <p class="coupon_field">
+              Купоны
+              <input type="text" class="text" value="{{ cart.coupon }}" name="cart[coupon]" id="coupon_text" style="margin-left: 10px;"/>
+              <input type="submit" class="btn btn-dark btnCoupon recalculate" value="Применить купон" />
+            </p>
+            </td>
+            <td class="d-flex align-items-center cartSumma">
+              <span>{{ cart.items_price | money | replace: ' ','&nbsp;'}}</span>
+            </td>
+          </tr>
+          {% comment %}
+            <tr>
+              <td class="coupon a-right" colspan="5">
+                  {% if cart.invalid_coupon? %}
+                      <p class="coupon_message"><strong>Уважаемый покупатель! Вами был введен промо-код, который, либо не существует, либо не может быть применен к данной группе товаров или в настоящее время.</strong></p>
+                  {% endif %}
+                <p class="coupon_field">
+                  Купоны
+                  <input type="text" class="text" value="{{ cart.coupon }}" name="cart[coupon]" id="coupon_text" style="margin-left: 10px;"/>
+              <input type="submit" class="btn btn-dark btnCoupon recalculate" value="Применить купон" />
+                </p>
+              </td>
+            </tr>
+
+
+            <!-- Купон -->
+            {% if cart.enable_coupon? %}
+              <tr>
+                <td class="coupon a-right" colspan="5">
+                    {% if cart.invalid_coupon? %}
+                        <p class="coupon_message"><strong>Уважаемый покупатель! Вами был введен промо-код, который, либо не существует, либо не может быть применен к данной группе товаров или в настоящее время.</strong></p>
+                    {% endif %}
+                  <p class="coupon_field">
+                      {{blocks.coupon.content}}
+                    <input type="text" class="text" value="{{ cart.coupon }}" name="cart[coupon]" id="coupon_text" style="margin-left: 10px;"/>
+                <input type="submit" class="btnCoupon recalculate" value="Применить купон" />
+                  </p>
+                </td>
+              </tr>
+              {% include 'coupon' %}
+            {% endif %}
+            <!-- // Купон -->
+            {% endcomment %}
+            <tr>
+              <td colspan="3"><a class="btnBackToShop" href="/">Вернуться в магазин</a></td>
+              <td colspan="2" class="text-right"><input id="create_order" type="submit" class="btn btn-dark submit btnGoToCash" value="Оформить заказ" name="make_order"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="cartSummary clearfix">
+          <div class="left">
+            <p><strong>Выгодные предложения от нашего интернет-магазина</strong></p>
+            <p>Бесплатная доставка по всей России при заказе от 3000 рублей!</p>
+
+            <p>Кликни по промокоду и нажми "Применить купон"!</p>
+            <!--p><span class="promolink">embajador</span> Только в октябре! Скидка - 25% на весь ассортимент Embajador</p-->
+            <p><span class="promolink">time</span> В выходные дни с 12.00 до 16.00 скидка -20% на все товары, кроме новой коллекции, уцененных товаров и товаров,участвующих в других акциях</p>
+            <p>Подпишись на <a href="/page/podpiska-na-novosti">нашу рассылку</a> и получи подарок!</p>
+            <p>Подпишись на нас в <a href="https://instagram.com/atlanticrussia">Instagram</a> и получи подарок!</p>
+            <p>Вступай в нашу группу <a href="http://vk.com/club27559949">Vkontakte</a> и получи подарок!</p>
+            <!--{{blocks.cartblock.content}}-->
+          </div>
+          <div class="right">
+        <!-- Скидки -->
+        <p class="discounts" style="{% if cart.discounts %}display:block;{%else%}display:none;{% endif %}">
+           {% for discount in cart.discounts %}
+              <strong>{{ discount.description }}:</strong> <span class="big">{{ discount.amount | money }}</span><br clear="all" />
+            {% endfor %}
+        </p>
+
+        <!-- // Скидки -->
+          </div>
+        </div>
+        {% comment %}
+        <div class="fieldCheckNext clearfix">
+          <a class="btnBackToShop" href="/">Вернуться в магазин</a>
+           <input id="create_order" type="submit" class="submit btnGoToCash" value="Оформить заказ" name="make_order">
+
+          {% if cart.items_price > 1500 %}
+            <input id="create_order" type="submit" class="submit btnGoToCash" value="Оформить заказ" name="make_order">
+          {% else %}
+            <span style="float:right; font-size:1.5em; text-align:right;">Извините, минимальная сумма заказа &mdash; <strong>1500 рублей</strong>.<br /> Добавьте в корзину еще несколько товаров.</span>
+          {% endif %}
+
+        </div>
+        {% endcomment %}
+      </form>
+      {% else %}
+        <p>Ваша корзина пуста.</p>
+      {% endif %}
+
     </div>
-  </form>
-  {% else %}
-    <p>Ваша корзина пуста.</p>
-  {% endif %}
-</div>
+  </div>
+</section>
